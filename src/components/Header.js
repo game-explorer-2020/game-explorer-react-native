@@ -1,11 +1,11 @@
 import React from 'react'
 import { Text, SafeAreaView, StyleSheet} from 'react-native'
-import Estilo from '../estilos/Estilo'
+import Style from '../styles/Style'
 
 export default props => {
     return (
         <SafeAreaView style={style.AppBlack}>
-            <Text style={[Estilo.fontG, global.colorMode]}>Game Explorer</Text>
+            <Text style={[Style.fontG, global.fontColor]}>Game Explorer</Text>
         </SafeAreaView>
     )
 }

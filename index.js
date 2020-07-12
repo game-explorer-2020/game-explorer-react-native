@@ -1,12 +1,9 @@
 import { registerRootComponent } from 'expo';
 
 import App from './src/App';
-import Estilo from './src/estilos/Estilo'
+import Style from './src/styles/Style'
 
-global.colorMode = Estilo.fontDark;
-//import {app as appName} from './app.json';
+global.fontColor = Style.fontDark;
+global.backgroundColor = Style.backgroundDark;
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in the Expo client or in a native build,
-// the environment is set up appropriately
-registerRootComponent(App); //(appName, () => App);
+registerRootComponent(App); 

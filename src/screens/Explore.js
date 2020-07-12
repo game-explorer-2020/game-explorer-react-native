@@ -1,30 +1,15 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
-import Estilo from '../estilos/Estilo'
+import Carousel from '../components/Carousel'
 
 export default function App() {
   return (
-    <SafeAreaView style={style.AppBlack}>
-      <Text style={[Estilo.fontP, global.colorMode]}>Explore!</Text>
+    <SafeAreaView style={global.backgroundColor}>
+      <Carousel name={'Popular games'}/> 
+      <Carousel name={'My favorite games'}/> 
+      <Carousel name={'My favorite news'}/> 
       <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
-
-const style = StyleSheet.create({
-    AppBlack: {
-        backgroundColor: 'black',
-        flexGrow: 1,
-        justifyContent: "center", //Centraliza na vertical da tela
-        alignItems: "center",      //Centraliza na horizontal da tela
-        padding: 20
-    },
-    AppWhite: {
-        backgroundColor: 'white',
-        flexGrow: 1,
-        justifyContent: "center", //Centraliza na vertical da tela
-        alignItems: "center",      //Centraliza na horizontal da tela
-        padding: 20
-    }
-})
