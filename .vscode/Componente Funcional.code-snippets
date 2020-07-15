@@ -1,0 +1,27 @@
+{
+	"Componente Funcional": {
+	 	"scope": "javascript",
+	 	"prefix": "main()",
+	 	"body": [
+			"import React from 'react'",
+			"import { View, Text } from 'react-native'",
+			"import Style from '../styles/Style'",
+			"",
+			"export default props => {",
+			"    return (",
+			"        <Text style={[Style.fontP, global.fontDark]}>$1</Text>",
+			"    )",
+	 		"}",
+	 	],
+	 	"description": "Log output to console"
+	},
+
+	"Pipeline": {
+		"scope": "javascript",
+		"prefix": "pipeline",
+		"body": [
+		   " || $1",
+		],
+		"description": "Log output to console"
+   }
+}

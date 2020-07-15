@@ -1,2 +1,2 @@
-# Game Explorer - React Native
-Aplicativo feito em React Native de exploração de jogos e notícias. Projeto de TCC.
+# TOOL BOX
+Códigos de diferentes linguagens para auxiliar em problemas futuros.
