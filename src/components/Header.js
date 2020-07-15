@@ -15,13 +15,13 @@ const style = StyleSheet.create({
     AppBlack: {
         backgroundColor: 'black',
         alignItems: "flex-start",
-        paddingTop: 10,
-        paddingLeft: 10
+        paddingTop: 8,
+        paddingLeft: 3
     },
     AppWhite: {
         backgroundColor: 'white',
         alignItems: "flex-start",
-        paddingTop: 10,
-        paddingLeft: 10
+        paddingTop: 8,
+        paddingLeft: 3
     }
 })

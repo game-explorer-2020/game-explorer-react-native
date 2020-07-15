@@ -2,13 +2,13 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     fontG: {
-        fontSize: 20,
-        fontFamily: 'Nunito-Bold.ttf',
+        fontSize: 22,
+        fontFamily: 'NunitoBold',
         textAlign: 'auto'
     },
     fontP: {
-        fontSize: 16,
-        fontFamily: 'Nunito-Regular.ttf',
+        fontSize: 15,
+        fontFamily: 'NunitoRegular',
         textAlign: 'auto'
     },
     fontLight: {

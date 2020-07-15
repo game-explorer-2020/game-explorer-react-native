@@ -9,12 +9,12 @@ export default props => {
     return (
         <>
             <SafeAreaView style={styles.Row}>
-                <Text style={[Style.fontG, global.fontColor]}>{props.name}</Text>
-                <Text style={[Style.fontG, global.fontColor]}>SEE ALL →</Text>
+                <Text style={[Style.fontP, global.fontColor]}>{props.name}</Text>
+                <Text style={[Style.fontP, global.fontColor, {fontSize: 12}]}>SEE ALL →</Text>
             </SafeAreaView>
             <ScrollView
             horizontal={true}
-            style={styles.scrollView}>
+            >
                 <Image source={Image_Http_URL} style={styles.frame} />
                 <Image source={Image_Http_URL} style={styles.frame} />
                 <Image source={Image_Http_URL} style={styles.frame} />

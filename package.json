@@ -13,16 +13,20 @@
     "expo-splash-screen": "~0.3.1",
     "expo-status-bar": "^1.0.0",
     "expo-updates": "~0.2.10",
+    "moment": "^2.27.0",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
+    "react-moment": "^0.9.7",
     "react-native": "~0.62.2",
+    "react-native-fontawesome": "^7.0.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-reanimated": "~1.9.0",
     "react-native-screens": "~2.9.0",
     "react-native-vector-icons": "^7.0.0",
     "react-native-web": "^0.13.3",
     "react-navigation": "^4.4.0",
-    "react-navigation-tabs": "^2.9.0"
+    "react-navigation-tabs": "^2.9.0",
+    "expo-font": "~8.2.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
@@ -33,8 +37,5 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true,
-  "assets": [
-    "fonts"
-  ]
+  "private": true
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { View, Text } from 'react-native';
 import Style from '../styles/Style'
 
-export default class App extends Component {
+export default class RequestGames extends Component {
 
     state = {
         games: []

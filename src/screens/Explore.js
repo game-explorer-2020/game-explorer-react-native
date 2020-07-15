@@ -9,7 +9,6 @@ export default function App() {
       <Carousel name={'Popular games'}/> 
       <Carousel name={'My favorite games'}/> 
       <Carousel name={'My favorite news'}/> 
-      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
