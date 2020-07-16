@@ -1,33 +1,26 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { View, Text } from 'react-native';
 import Style from '../styles/Style'
 
-export default class RequestGames extends Component {
+function RequestGames() {
+    const [games, setGames] = useState([]);
 
-    state = {
-        games: []
+    useEffect(() => {
+        fetchGames();
+    }, []);
+
+    async function fetchGames() {
+        const response = await api.get(`/games`);
+        setGames(response.data);
     }
 
-    componentDidMount(){
-        axios.get("http://game-explorer-unisul.herokuapp.com/api/v1/games")
-            .then(response => {
-                this.setState({
-                    games: response.data
-                });
-                //console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    render(){
-        return (
-            <View>
-                { this.state.games.map(game => <Text style={[Style.fontG, global.fontColor]} key={game.id}>{game.title}</Text>)}
-            </View>
-        )
-    }
+    return (
+        <View>
+            { games.map(game => <Text style={[Style.fontG, global.fontColor]} key={game.id}>{game.title}</Text>)}
+        </View>
+    )
 
 }
+
+export default RequestGames;

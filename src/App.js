@@ -1,5 +1,5 @@
-import React, {Component} from 'react'  //import do JSX que transforma JS em uma view HTML. OBRIGATÓRIO
-import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native' //Componente Text
+import React, { useState, useEffect } from 'react'  //import do JSX que transforma JS em uma view HTML. OBRIGATÓRIO
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native' //Componente Text
 import { createAppContainer } from 'react-navigation';
 import Navigator from './Navigator';
 import Header from './components/Header';
@@ -9,47 +9,36 @@ import { AppLoading } from "expo";
 const AppIndex = createAppContainer(Navigator)
 
 
-export default class App extends Component{
-    constructor(props) {
-        super(props)
-        this.state = {
-          fontLoaded: false
-        }
-    }
+function App() {
+    const [fontLoaded, setFontLoaded] = useState(false);
 
-    async componentDidMount() {
+    useEffect(() => {
         try {
-          await Font.loadAsync({
-            NunitoBold: require('../assets/fonts/Nunito-Bold.ttf'),
-            NunitoRegular: require('../assets/fonts/Nunito-Regular.ttf')
-          })
-          this.setState({ fontLoaded: true })
-        } catch (error) {
-          console.log(error)
-          return
-        }
-    }
+            await Font.loadAsync({
+              NunitoBold: require('../assets/fonts/Nunito-Bold.ttf'),
+              NunitoRegular: require('../assets/fonts/Nunito-Regular.ttf')
+            })
+            setFontLoaded(true);
+          } catch (error) {
+            console.log(error)
+            return
+          }
+    }, []);
 
-    render(){
-        const { fontLoaded } = this.state
-
-        if (fontLoaded) {
-            return(
-                <SafeAreaView style={{flex:1}}>
-                    <StatusBar style="auto" />
-                    <SafeAreaView style={styles.header}>  
-                        <Header/>
-                    </SafeAreaView>  
-                    <AppIndex/>  
-                </SafeAreaView>
-            )
-        }
-        return(
-            <SafeAreaView>
-                <AppLoading/>
-            </SafeAreaView>
-        )
-    }
+    return fontLoaded ? 
+    (
+        <SafeAreaView style={{flex:1}}>
+            <StatusBar style="auto" />
+            <SafeAreaView style={styles.header}>  
+                <Header/>
+            </SafeAreaView>  
+            <AppIndex/>  
+        </SafeAreaView>
+    ) : (
+        <SafeAreaView>
+            <AppLoading/>
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({  
@@ -65,3 +54,5 @@ const styles = StyleSheet.create({
         paddingTop: 5,  
     }  
 });  
+
+export default App;

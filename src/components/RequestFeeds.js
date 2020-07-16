@@ -1,53 +1,46 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Image, Text, StyleSheet, ScrollView } from 'react-native';
 import Style from '../styles/Style'
-import RequestAPI from './RequestAPI';
 import moment from 'moment';
+import api from '../services/api';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-export default class RequestFeeds extends Component {
+function RequestFeeds() {
+    const [feeds, setFeeds] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
 
-    state = {
-        feeds: []
+    useEffect(() => {
+        fetchFeeds();
+    }, []);
+
+    async function fetchFeeds() {
+        const response = await api.get(`/feeds?offset${currentPage}`);
+        setFeeds(response.data.map(feed => {
+            return {
+                ...feed,
+                publishedAt: moment(new Date(feed.publishedAt * 1000), "YYYYMMDD").fromNow()
+            };
+        }));
     }
 
-    componentDidMount(){
-        axios.get("http://game-explorer-unisul.herokuapp.com/api/v1/feeds")
-            .then(response => {
-                this.setState({
-                    feeds: response.data
-                });
-                //console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    getData = props => moment(new Date(props.data * 1000), "YYYYMMDD").fromNow()
-   
-    render(){
-        return (
-            <SafeAreaView>
-                <ScrollView horizontal={false}>
-                {this.state.feeds.map(feed =>     
-                    <>
-                        <Image key={feed.id} source={{uri: feed.imageUrl}} style={styles.frame}></Image>
-                        <Text key={feed.id1} style={[Style.fontP, global.fontColor, styles.newsText]}>{feed.title}</Text>
-                        <SafeAreaView key={feed.id2} style={styles.Row}>
-                            <Icon key={feed.id3} name="heart" size={13} color="#17B978" />  
-                            <Text key={feed.id4} style={[Style.fontP, styles.timeStamp]}>
-                                {this.getData({data: feed.publishedAt})}
-                            </Text>
-                        </SafeAreaView>
-                    </>
-                )}
-                </ScrollView>
-            </SafeAreaView>
-        )
-    }
+    return (
+        <SafeAreaView>
+            <ScrollView horizontal={false}>
+            {feeds.map(feed =>     
+                <>
+                    <Image key={feed.id} source={{uri: feed.imageUrl}} style={styles.frame}></Image>
+                    <Text key={feed.id1} style={[Style.fontP, global.fontColor, styles.newsText]}>{feed.title}</Text>
+                    <SafeAreaView key={feed.id2} style={styles.Row}>
+                        <Icon key={feed.id3} name="heart" size={13} color="#17B978" />  
+                        <Text key={feed.id4} style={[Style.fontP, styles.timeStamp]}>{feed.publishedAt}</Text>
+                    </SafeAreaView>
+                </>
+            )}
+            </ScrollView>
+        </SafeAreaView>
+    )
+    
 }
 
 
@@ -78,3 +71,5 @@ const styles = StyleSheet.create({
         letterSpacing: 0.15
     }
 })
+
+export default RequestFeeds;
