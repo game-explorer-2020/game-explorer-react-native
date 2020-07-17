@@ -1,27 +1,18 @@
-import React, {Component} from 'react'
+import React from 'react'
 import axios from 'axios';
 
-export default class RequestAPI extends Component {
+export default RequestAPI => {
 
-    state = {
-        data: []
-    }
-
-    constructor (props){
-        super(props)
-        baseUrl = props.baseUrl;
-    }
-
-    componentDidMount(){
+    function getDataFromAPI(baseUrl){
         axios.get("http://game-explorer-unisul.herokuapp.com/api/v1/"+baseUrl)
-            .then(response => {
-                this.setState({
-                    data: response.data
-                });
-                return response.data
-            })
-            .catch(error => {
-                console.log(error);
+        .then(response => {
+            this.setState({
+                data: this.response.data
             });
+            return this.response.data
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 }

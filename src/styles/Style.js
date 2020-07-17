@@ -7,7 +7,7 @@ export default StyleSheet.create({
         textAlign: 'auto'
     },
     fontP: {
-        fontSize: 15,
+        fontSize: 16,
         fontFamily: 'NunitoRegular',
         textAlign: 'auto'
     },

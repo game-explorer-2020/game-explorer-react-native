@@ -16,12 +16,12 @@ const style = StyleSheet.create({
         backgroundColor: 'black',
         alignItems: "flex-start",
         paddingTop: 8,
-        paddingLeft: 3
+        marginLeft: 5
     },
     AppWhite: {
         backgroundColor: 'white',
         alignItems: "flex-start",
         paddingTop: 8,
-        paddingLeft: 3
+        marginLeft: 5
     }
 })
