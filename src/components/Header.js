@@ -1,13 +1,11 @@
 import React from 'react'
 import { Text, SafeAreaView, StyleSheet} from 'react-native'
 import Style from '../styles/Style'
-import Icon from 'react-native-fontawesome';
 
 export default props => {
     return (
-        <SafeAreaView style={style.AppBlack}>
+        <SafeAreaView style={{flex:1},style.AppBlack}>
             <Text style={[Style.fontG, global.fontColor]}>Game Explorer</Text>
-            <Icon name="heart" size={14} color="#17B978" />  
         </SafeAreaView>
     )
 }

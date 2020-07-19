@@ -27,6 +27,7 @@ export default props => {
 
 const styles = StyleSheet.create({
     Row: {
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "flex-start",

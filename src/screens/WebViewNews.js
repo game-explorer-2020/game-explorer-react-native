@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
+import { StyleSheet, Text, Button, SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 export default class WebViewNews extends Component {
 
   render(){
-    
       const source = this.props.navigation.state.params.url;
-
       return (
-          <WebView
-            source={{ uri: 'https://www.arcadelunia.com/' }}
-            style={styles.videos}
+        <SafeAreaView style={styles.container}>
+          <WebView 
+              originWhitelist={['*']}
+              source={{ uri: source }}
+              style={styles.video}
           />
+          <Button title="Back" onPress={()=>this.props.navigation.navigate('NewsFeed')} style={{ width: "100%" }}/>
+        </SafeAreaView>
       );
     }
 }
@@ -20,11 +22,10 @@ export default class WebViewNews extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-
+    width: "100%"
   },
   video: {
     marginTop: 20,
+    alignItems: 'center'
   }
 });

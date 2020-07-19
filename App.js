@@ -26,9 +26,9 @@ export default function App() {
 
    // return !fontLoaded ? 
   return  (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={styles.wrapper}>
             <StatusBar style="auto" />
-            <SafeAreaView style={styles.header}>  
+            <SafeAreaView style={{flex:1}, styles.header}>  
             {/*
                 this.props.navigation.state.screens == 'NewsFeed'?
                 <Header/>:
@@ -40,7 +40,7 @@ export default function App() {
         </SafeAreaView>
     );// : (
         <SafeAreaView>
-
+            <AppLoading/>
         </SafeAreaView>
    // );
 }

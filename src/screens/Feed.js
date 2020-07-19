@@ -1,9 +1,8 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import NewsFeed from '../components/NewsFeed'
 import Navigator from '../routes'
 
-export default function App() {
+export default function Feed() {
   return (
     <SafeAreaView style={global.backgroundColor}>
       < Navigator />

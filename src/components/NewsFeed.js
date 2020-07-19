@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withNavigation } from 'react-navigation';
 import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import Style from '../styles/Style'
-import Icon from 'react-native-fontawesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 import api from '../services/api';
 
@@ -53,10 +53,10 @@ function NewsFeed ({ navigation }) {
     
 const styles = StyleSheet.create({
     Row: {
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "flex-start",
-        width: "100%",
         marginTop: 5,
         marginBottom: 15
     },
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     timeStamp: {
-        alignItems: 'flex-start',
+        alignItems: 'flex-end',
         fontSize: 15,
         color: '#494949',
         letterSpacing: 0.15
