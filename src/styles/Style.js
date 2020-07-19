@@ -4,12 +4,12 @@ export default StyleSheet.create({
     fontG: {
         fontSize: 22,
         fontFamily: 'NunitoBold',
-        textAlign: 'auto'
+        textAlign: 'justify'
     },
     fontP: {
         fontSize: 16,
         fontFamily: 'NunitoRegular',
-        textAlign: 'auto'
+        textAlign: 'justify'
     },
     fontLight: {
         color: 'black'

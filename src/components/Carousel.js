@@ -1,43 +1,58 @@
-import React from 'react'
-import { SafeAreaView, Text, StyleSheet, Image, ScrollView } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { SafeAreaView, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native'
+import { withNavigation } from 'react-navigation';
 import Style from '../styles/Style'
+import api from '../services/api';
 
-export default props => {
 
-    let Image_Http_URL = { uri: 'https://media.contentapi.ea.com/content/dam/bf/images/bfcom-migration/battlefield-1.jpg.adapt.crop191x100.1200w.jpg'}
-   
+function Carousel ( props, { navigation }) {
+
+    const [myList, setMyList] = useState([]);
+    
+    useEffect(() => {
+        async function loadMyList() {
+            const response = await api.get('games');
+            setMyList([...response.data]);
+        } 
+        loadMyList();
+    }, []);
+
+  
+
     return (
-        <>
+        <SafeAreaView style={{flex:1},{width:330}}>
             <SafeAreaView style={styles.Row}>
                 <Text style={[Style.fontP, global.fontColor]}>{props.name}</Text>
-                <Text style={[Style.fontP, global.fontColor, {fontSize: 12}]}>SEE ALL →</Text>
+                <TouchableOpacity onPress={() => props.funcao('ListGames', myList)}>
+                    <Text style={[global.fontColor, {fontSize: 13}]}>SEE ALL →</Text>
+                </TouchableOpacity>
             </SafeAreaView>
-            <ScrollView
-            horizontal={true}
-            >
-                <Image source={Image_Http_URL} style={styles.frame} />
-                <Image source={Image_Http_URL} style={styles.frame} />
-                <Image source={Image_Http_URL} style={styles.frame} />
-                <Image source={Image_Http_URL} style={styles.frame} />               
-            </ScrollView>
-        </>
-    )
+            <FlatList
+            data={myList}
+            keyExtractor={(item,index) => index.toString()}
+            horizontal
+            renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => props.funcao('GameDetails', myList)}>
+                    <Image source={{uri: item.coverUrl}} style={styles.frame}/>
+                </TouchableOpacity>
+            )}/>
+        </SafeAreaView>
+    );
 }
-
 
 const styles = StyleSheet.create({
     Row: {
-        flex: 1,
+        paddingTop: 10,
+        paddingBottom: 5,
         flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        width: "100%",
-        paddingTop: 15
+        justifyContent: "space-between"
     },
     frame: {
         height: 100,
         width: 100,
         borderRadius: 10,
         marginRight: 10
-    },
+    }
 })
+
+export default withNavigation(Carousel);

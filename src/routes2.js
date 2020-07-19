@@ -1,13 +1,13 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import NewsFeed from './screens/NewsFeed';
-import WebViewNews from './screens/WebViewNews';
+import ListGames from './screens/ListGames';
+import ExploreList from './screens/ExploreList';
 
 const screens = {
-    NewsFeed: {
-        screen: NewsFeed
+    ExploreList: {
+        screen: ExploreList
     },
-    WebViewNews: {
-        screen: WebViewNews
+    ListGames: {
+        screen: ListGames
     },
 }
 

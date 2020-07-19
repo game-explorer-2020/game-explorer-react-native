@@ -1,13 +1,11 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import Carousel from '../components/Carousel'
+import { View } from 'react-native';
+import Navigator from '../routes2'
 
 export default function Explore() {
   return (
-    <SafeAreaView style={global.backgroundColor}>
-      <Carousel name={'Popular Games'}/> 
-      <Carousel name={'My favorite Games'}/> 
-      <Carousel name={'My favorite news'}/> 
-    </SafeAreaView>
+    <View style={global.backgroundColor}>
+      <Navigator/> 
+    </View>
   );
 }

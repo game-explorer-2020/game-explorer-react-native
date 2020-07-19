@@ -8,7 +8,7 @@ import { AppLoading } from "expo";
 
 const AppIndex = createAppContainer(Navigator)
 
-export default function App() {
+export default function App({ route }) {
     /*const [fontLoaded, setFontLoaded] = useState(false);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export default function App() {
   return  (
         <SafeAreaView style={styles.wrapper}>
             <StatusBar style="auto" />
-            <SafeAreaView style={{flex:1}, styles.header}>  
+            <SafeAreaView style={styles.header}>  
             {/*
                 this.props.navigation.state.screens == 'NewsFeed'?
                 <Header/>:
@@ -47,14 +47,11 @@ export default function App() {
 
 const styles = StyleSheet.create({  
     wrapper: {  
-        flex: 1,  
+        flex:1
     },  
     header:{  
-        flexDirection: 'row',  
-        alignItems: 'center',  
-        justifyContent: 'space-between',  
         backgroundColor: 'black',  
-        paddingHorizontal: 18,  
+        paddingHorizontal: 8,  
         paddingTop: 5,  
     }  
 });  

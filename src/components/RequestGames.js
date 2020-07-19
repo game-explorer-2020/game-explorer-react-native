@@ -29,7 +29,7 @@ function NewsFeed ({ navigation }) {
                 vertical
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
-                <SafeAreaView style={{flex:1}}>
+                <SafeAreaView>
                     <TouchableOpacity onPress={() => handleNavigate(item)}>
                         <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
                     </TouchableOpacity>
