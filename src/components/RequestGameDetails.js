@@ -1,40 +1,71 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { View, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { withNavigation } from 'react-navigation';
+import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import Style from '../styles/Style'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import api from '../services/api';
 
-export default class RequestGameDetails extends Component {
+function NewsFeed ({ navigation }) {
+    const [gamesDetails, setGamesDetails] = useState([]);
 
-    state = {
-        gameDetails: {}
+    useEffect(() => {
+    async function loadFeeds(gameID=0) {
+        const response = await api.getDataFromAPI('games/details'+this.gameID);
+        setFeeds(response.data);
+    }
+        loadFeeds(gameID);
+    }, []);
+
+    function handleNavigate(item) {
+        //Linking.openURL(item).catch(err => console.error("Couldn't load page", err));
+        navigation.navigate('WebViewNews', { item });
     }
 
-    constructor(props){
-        super(props)
-        this.gameId = props.gameId;
+    return (           
+        <>
+            <FlatList
+                data={gamesDetails}
+                keyExtractor={(item,index) => index.toString()}
+                vertical
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => (
+                <SafeAreaView>
+                    <TouchableOpacity onPress={() => handleNavigate(item)}>
+                        <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
+                    </TouchableOpacity>
+                </SafeAreaView>
+                )}
+            />
+        </>
+    )
+ }
+    
+const styles = StyleSheet.create({
+    Row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        width: "100%",
+        marginTop: 5,
+        marginBottom: 20
+    },
+    frame: {
+        marginTop: 8,
+        height: 175,
+        width: 'auto',
+        borderRadius: 10
+    },
+    newsText: {
+        paddingTop: 5,
+        paddingBottom: 3,
+        alignItems: 'flex-start'
+    },
+    timeStamp: {
+        alignItems: 'flex-start',
+        fontSize: 15,
+        color: '#494949',
+        letterSpacing: 0.15
     }
+})
 
-    componentDidMount(){
-        axios.get('http://game-explorer-unisul.herokuapp.com/api/v1/games/details/'+this.gameId)
-            .then(response => {
-                this.setState({
-                    gameDetails: response.data
-                });
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    render(){
-        return (
-            <View>
-                <Text style={[Style.fontG, global.fontColor]}>
-                    {JSON.stringify(this.state.gameDetails)}
-                </Text>
-            </View>
-        )
-    }
-
-}
+export default withNavigation(NewsFeed);

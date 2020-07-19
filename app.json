@@ -1,12 +1,4 @@
 {
-  "name": "AwesomeProject",
-  "displayName": "AwesomeProject",
-  "expo": {
-    "name": "AwesomeProject",
-    "slug": "AwesomeProject",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  }
+  "name": "GameExplorer",
+  "displayName": "GameExplorer"
 }

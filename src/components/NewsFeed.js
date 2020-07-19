@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withNavigation } from 'react-navigation';
 import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import Style from '../styles/Style'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-fontawesome';
 import moment from 'moment';
 import api from '../services/api';
 
@@ -11,15 +11,14 @@ function NewsFeed ({ navigation }) {
 
     useEffect(() => {
     async function loadFeeds() {
-        const response = await api.get('/feeds');
+        const response = await api.get('feeds');
         setFeeds(response.data);
     }
-
         loadFeeds();
     }, []);
 
-    function handleNavigate(item) {
-        navigation.navigate('WebViewNews', { item });
+    function handleNavigate( item ) {
+        navigation.navigate('WebViewNews', { url : item.url });
     }
   
   function getData (props) {
@@ -59,12 +58,12 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         width: "100%",
         marginTop: 5,
-        marginBottom: 20
+        marginBottom: 15
     },
     frame: {
         marginTop: 8,
         height: 175,
-        width: 'auto',
+        width: '100%',
         borderRadius: 10
     },
     newsText: {

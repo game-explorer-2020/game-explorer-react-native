@@ -1,33 +1,71 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { View, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { withNavigation } from 'react-navigation';
+import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import Style from '../styles/Style'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import api from '../services/api';
 
-export default class RequestGames extends Component {
+function NewsFeed ({ navigation }) {
+    const [games, setGames] = useState([]);
 
-    state = {
-        games: []
+    useEffect(() => {
+    async function loadFeeds() {
+        const response = await api.getDataFromAPI('games');
+        setFeeds(response.data);
     }
 
-    componentDidMount(){
-        axios.get("http://game-explorer-unisul.herokuapp.com/api/v1/games")
-            .then(response => {
-                this.setState({
-                    games: response.data
-                });
-                //console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        loadFeeds();
+    }, []);
+
+    function handleNavigate(item) {
+        navigation.navigate('WebViewNews', { item });
     }
 
-    render(){
-        return (
-            <View>
-                { this.state.games.map(game => <Text style={[Style.fontG, global.fontColor]} key={game.id}>{game.title}</Text>)}
-            </View>
-        )
+    return (           
+        <>
+            <FlatList
+                data={games}
+                keyExtractor={(item,index) => index.toString()}
+                vertical
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => (
+                <SafeAreaView>
+                    <TouchableOpacity onPress={() => handleNavigate(item)}>
+                        <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
+                    </TouchableOpacity>
+                </SafeAreaView>
+                )}
+            />
+        </>
+    )
+ }
+    
+const styles = StyleSheet.create({
+    Row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        width: "100%",
+        marginTop: 5,
+        marginBottom: 20
+    },
+    frame: {
+        marginTop: 8,
+        height: 175,
+        width: 'auto',
+        borderRadius: 10
+    },
+    newsText: {
+        paddingTop: 5,
+        paddingBottom: 3,
+        alignItems: 'flex-start'
+    },
+    timeStamp: {
+        alignItems: 'flex-start',
+        fontSize: 15,
+        color: '#494949',
+        letterSpacing: 0.15
     }
+})
 
-}
+export default withNavigation(NewsFeed);

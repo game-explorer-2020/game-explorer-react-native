@@ -1,10 +1,14 @@
-import { registerRootComponent } from 'expo';
+/**
+ * @format
+ */
+import { AppRegistry } from 'react-native';
 
-//import App from './src/App';
-import App from './src/screens/WebViewNews';
+import App from './App';
+//import App from './src/screens/Feed';
+//import App from './src/screens/WebViewNews';
 import Style from './src/styles/Style'
 
 global.fontColor = Style.fontDark;
 global.backgroundColor = Style.backgroundDark;
 
-registerRootComponent(App); 
+AppRegistry.registerComponent('GameExplorer', () => App);

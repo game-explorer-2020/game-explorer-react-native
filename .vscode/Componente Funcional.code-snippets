@@ -23,5 +23,12 @@
 		   " || $1",
 		],
 		"description": "Log output to console"
+   },
+
+   "DarkMode": {
+	   "scope": "javascript",
+	   "prefix": "darkmode",
+	   "body": ["style={[Style.fontG, global.fontColor]}"],
+	   "description": "Log output to console"
    }
 }
