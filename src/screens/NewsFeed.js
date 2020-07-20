@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { withNavigation } from 'react-navigation';
 import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Style from '../styles/Style'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 import api from '../services/api';
+import Favorite from '../components/Favorite'
 
 function NewsFeed ({ navigation }) {
 
@@ -17,8 +17,9 @@ function NewsFeed ({ navigation }) {
     }, []);
 
     loadFeeds = async () => {
-        const response = await api.get('feeds?offset='+currentPage);
+        if(loading) return;
         setLoading(true)
+        const response = await api.get('feeds?offset='+currentPage);
         setTimeout(() => {
             setFeeds([...feeds, ...response.data]);
             setLoading(false);
@@ -41,14 +42,20 @@ function NewsFeed ({ navigation }) {
           </SafeAreaView>
         );
     };
-       
-    handleLoadMore = () => {
+                  
+    function handleLoadMore () {
+        if(loading) return;
         setCurrentPage(currentPage + 1);
         loadFeeds();
     };
-           
-    setLoadingBegin = async () => {
-        setLoading(true);
+
+    function renderFooter() {
+        if (loading) return null;
+        return (
+          <View>
+            <ActivityIndicator />
+          </View>
+        );
     };
 
     return (           
@@ -57,9 +64,11 @@ function NewsFeed ({ navigation }) {
                 data={feeds}
                 keyExtractor={(item,index) => index.toString()}
                 vertical
-                showsHorizontalScrollIndicator={false}
-                onEndThreshold={100}    
+                showsHorizontalScrollIndicator={true}
+                onEndReached={handleLoadMore}
+                onEndThreshold={0.1}    
                 contentContainerStyle={{ flexGrow: 1 }}
+                ListFooterComponen={renderFooter}
                 renderItem={({ item }) => (
                 <SafeAreaView>
                     <TouchableOpacity onPress={() => handleNavigate(item)}>
@@ -67,7 +76,7 @@ function NewsFeed ({ navigation }) {
                     </TouchableOpacity>
                         <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
                         <SafeAreaView style={styles.Row}>
-                            <Icon name="heart-o" size={14} color="#17B978" />  
+                            <Favorite content={item}/>  
                             <Text style={[Style.fontP, styles.timeStamp]}>
                                 {getData({data: item.publishedAt})}
                             </Text>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, Button } from 'react-native';
 import Style from '../styles/Style'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { withNavigation } from 'react-navigation';
+import Favorite from '../components/Favorite';
 
 class ListGames extends Component {
 
@@ -32,12 +32,12 @@ class ListGames extends Component {
                                         <Text style={styles.smallTextGrey}>Platforms: </Text>
                                         <Text style={styles.smallTextGreen}> {item.platforms} </Text>
                                     </SafeAreaView>
-                                    <Icon name="heart-o" size={14} color="#17B978" />  
+                                    <Favorite content={item}/>
                                 </SafeAreaView>
                             </SafeAreaView>
                         </TouchableOpacity>
                 )}/>
-                <Button title="Back" onPress={()=>console.log(games)} style={{ width: "100%" }}/>
+                <Button color="#494949" title="Back" onPress={()=>this.props.navigation.navigate('ExploreList')}/>
             </SafeAreaView>
         );
     }

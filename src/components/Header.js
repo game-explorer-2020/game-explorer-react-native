@@ -4,9 +4,9 @@ import Style from '../styles/Style'
 
 export default props => {
     return (
-        <View style={style.AppBlack}>
+        <View style={style.AppBlack, style.header}>
             <Text style={[Style.fontG, global.fontColor]}>Game Explorer</Text>
-        </View>
+        </View>        
     )
 }
 
@@ -19,5 +19,10 @@ const style = StyleSheet.create({
     AppWhite: {
         backgroundColor: 'white',
         paddingTop: 8
-    }
+    },
+    header:{  
+        backgroundColor: 'black',  
+        paddingHorizontal: 8,  
+        paddingTop: 5,  
+    }  
 })

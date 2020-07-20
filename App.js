@@ -1,58 +1,35 @@
-import React, { useState, useEffect } from 'react'  //import do JSX que transforma JS em uma view HTML. OBRIGATÓRIO
+import React, { useState } from 'react'  //import do JSX que transforma JS em uma view HTML. OBRIGATÓRIO
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native' //Componente Text
 import { createAppContainer } from 'react-navigation';
 import Navigator from './src/Navigator';
 import Header from './src/components/Header';
-import * as Font from "expo-font";
-import { AppLoading } from "expo";
+import BackTitle from './src/components/BackTitle';
 
 const AppIndex = createAppContainer(Navigator)
 
 export default function App({ route }) {
-    /*const [fontLoaded, setFontLoaded] = useState(false);
+    const [isMainScreen, setIsMainScreen] = useState(true);
+    const [currentScene, setCurrenteScene] = useState();
 
-    useEffect(() => {
-        try {
-            Font.loadAsync({ 
-              NunitoBold: require('./assets/fonts/Nunito-Bold.ttf'),
-              NunitoRegular: require('./assets/fonts/Nunito-Regular.ttf')
-            })
-            setFontLoaded(true);
-          } catch (error) {
-            console.log(error)
-            return
-          }
-    }, []);*/
-
-   // return !fontLoaded ? 
-  return  (
-        <SafeAreaView style={styles.wrapper}>
-            <StatusBar style="auto" />
-            <SafeAreaView style={styles.header}>  
-            {/*
-                this.props.navigation.state.screens == 'NewsFeed'?
-                <Header/>:
-                <Header/>
-            */}
-                <Header/>
-            </SafeAreaView>  
-            <AppIndex/>  
-        </SafeAreaView>
-    );// : (
-        <SafeAreaView>
-            <AppLoading/>
-        </SafeAreaView>
-   // );
+    return  (
+            <SafeAreaView style={styles.wrapper}>
+                <StatusBar style="auto" />
+                { isMainScreen  ? 
+                    <>
+                        <Header/>      
+                        <AppIndex/> 
+                    </> :  
+                        <BackTitle name="News"/>
+                }
+            </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({  
     wrapper: {  
-        flex:1
-    },  
-    header:{  
-        backgroundColor: 'black',  
-        paddingHorizontal: 8,  
-        paddingTop: 5,  
-    }  
+        flex:1,
+        maxHeight: "100%",
+        maxWidth: "100%"
+    }
 });  
 

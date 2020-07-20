@@ -42,10 +42,11 @@ function Carousel ( props, { navigation }) {
 
 const styles = StyleSheet.create({
     Row: {
-        paddingTop: 10,
-        paddingBottom: 5,
+        paddingTop: 12,
+        paddingBottom: 3,
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "flex-end"
     },
     frame: {
         height: 100,

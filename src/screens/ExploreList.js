@@ -11,7 +11,7 @@ function ExploreList({ navigation }) {
     }
 
     return (
-        <View style={global.backgroundColor}>
+        <View style={global.backgroundColor, {flex:1}}>
             <Carousel name={"Popular Games"} funcao={handleNavigate}/> 
             <Carousel name={"My Favorite Games"} funcao={handleNavigate}/> 
             <Carousel name={"My Favorite News"} funcao={handleNavigate}/> 
