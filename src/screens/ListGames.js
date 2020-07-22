@@ -1,17 +1,48 @@
-import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, Button, TextInput } from 'react-native';
 import Style from '../styles/Style'
 import { withNavigation } from 'react-navigation';
 import Favorite from '../components/Favorite';
+import api from '../services/api'
 
-class ListGames extends Component {
+function ListGames({ navigation }) {
+   
+        const [games, setGames] = useState(navigation.state.params.list);
+        const [filter, setFilter] = useState('');
+           
+        useEffect(() => {
+            loadGames();
+        }, []);
 
-    
-    render(){
-        const games = this.props.navigation.state.params.list || [];
+        loadGames = async () => {
+            if(filter =='') return null
+            const response = await api.get('games?term='+ filter);
+            setTimeout(() => {
+                setGames([...response.data]);
+            }, 100)
+        } 
+
+        function handleLoadMore () {
+            console.log(filter)
+            loadGames();
+            setFilter('');
+        }
 
         return (           
             <SafeAreaView style={styles.container}>
+                <TextInput style={[styles.textInput]}
+                placeholder='🔎 Filter game name...'
+                placeholderTextColor = '#494949'
+                autoCorrect={false}
+                style={[global.fontColor, { borderBottomColor: "#494949", borderBottomWidth: 1, height: 40}]}
+                onChangeText={(filter) => setFilter(filter)}
+                keyboard= 'default'
+                multiline
+                onSubmitEditing={handleLoadMore}
+                clearButtonMode="while-editing"
+                />
+                { games.length > 0 ? (
+                <>
                 <FlatList
                     data={games}
                     keyExtractor={(item,index) => index.toString()}
@@ -37,11 +68,17 @@ class ListGames extends Component {
                             </SafeAreaView>
                         </TouchableOpacity>
                 )}/>
-                <Button color="#494949" title="Back" onPress={()=>this.props.navigation.navigate('ExploreList')}/>
+                <Button color="#494949" title="Back" onPress={()=>navigation.navigate('ExploreList')}/>
+                </>
+                ): 
+                (
+                    <>
+                    </>
+                )}
             </SafeAreaView>
         );
-    }
 }
+
   
 const styles = StyleSheet.create({
     mainText: {
@@ -72,6 +109,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     container: {
+        flex: 1,
+        margin: 0,
         width: '100%',
         height: '100%'
     }
