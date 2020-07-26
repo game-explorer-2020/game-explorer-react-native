@@ -11,8 +11,17 @@ function Carousel ( props, { navigation }) {
     
     useEffect(() => {
         async function loadMyList() {
-            const response = await api.get('games');
-            setMyList([...response.data]);
+            if(props.list!=null) { 
+                setMyList(props.list)
+                return
+            }
+            if(props.isGame){
+                const response = await api.get('games');
+                setMyList([...response.data]);
+            } else {
+                const response = await api.get('feeds');
+                setMyList([...response.data]);
+            }
         } 
         loadMyList();
     }, []);
@@ -23,7 +32,7 @@ function Carousel ( props, { navigation }) {
         <SafeAreaView style={{flex:1},{width:330}}>
             <SafeAreaView style={styles.Row}>
                 <Text style={[Style.fontP, global.fontColor]}>{props.name}</Text>
-                <TouchableOpacity onPress={() => props.funcao('ListGames', myList)}>
+                <TouchableOpacity onPress={() => props.showList(props.isGame?'ListGames':'ListFeed', myList)}>
                     <Text style={[global.fontColor, {fontSize: 13}]}>SEE ALL →</Text>
                 </TouchableOpacity>
             </SafeAreaView>
@@ -32,8 +41,8 @@ function Carousel ( props, { navigation }) {
             keyExtractor={(item,index) => index.toString()}
             horizontal
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => props.funcao('GameDetails', myList)}>
-                    <Image source={{uri: item.coverUrl}} style={styles.frame}/>
+                <TouchableOpacity onPress={() => props.list !== null ? loadNewDetails(item.id) : props.isGame?props.showItem('GameDetails', item.id):props.showItem('WebViewNews', item.url)}>
+                    <Image source={props.isGame?{uri: item.coverUrl}:{uri: item.imageUrl}} style={styles.frame}/>
                 </TouchableOpacity>
             )}/>
         </SafeAreaView>

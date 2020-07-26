@@ -30,5 +30,11 @@ export default StyleSheet.create({
         justifyContent: "center", //Centraliza na vertical da tela
         alignItems: "center",      //Centraliza na horizontal da tela
         padding: 20
+    },
+    container: {
+        flex: 1,
+        margin: 0,
+        width: '100%',
+        height: '100%'
     }
 })

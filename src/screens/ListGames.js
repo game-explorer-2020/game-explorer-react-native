@@ -4,6 +4,7 @@ import Style from '../styles/Style'
 import { withNavigation } from 'react-navigation';
 import Favorite from '../components/Favorite';
 import api from '../services/api'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function ListGames({ navigation }) {
    
@@ -23,24 +24,31 @@ function ListGames({ navigation }) {
         } 
 
         function handleLoadMore () {
-            console.log(filter)
             loadGames();
             setFilter('');
         }
 
+        function handleNavigate( item ) {
+            navigation.navigate('GameDetails', { gameId : item.id });
+        }
+
         return (           
-            <SafeAreaView style={styles.container}>
-                <TextInput style={[styles.textInput]}
-                placeholder='🔎 Filter game name...'
-                placeholderTextColor = '#494949'
-                autoCorrect={false}
-                style={[global.fontColor, { borderBottomColor: "#494949", borderBottomWidth: 1, height: 40}]}
-                onChangeText={(filter) => setFilter(filter)}
-                keyboard= 'default'
-                multiline
-                onSubmitEditing={handleLoadMore}
-                clearButtonMode="while-editing"
-                />
+            <SafeAreaView style={[Style.container]}>
+                <SafeAreaView style={styles.filterView}>
+                    <TextInput style={[styles.textInput]}
+                    placeholder='Filter game name'
+                    placeholderTextColor = '#7e7e7e'
+                    autoCorrect={false}
+                    style={[global.fontColor, { height: 35}]}
+                    onChangeText={(filter) => setFilter(filter)}
+                    keyboard= 'default'
+                    multiline
+                    onSubmitEditing={handleLoadMore}
+                    clearButtonMode="while-editing"
+                    />
+                    <Icon name={'search'} size={14} color="#7e7e7e" />
+                </SafeAreaView>
+
                 { games.length > 0 ? (
                 <>
                 <FlatList
@@ -53,15 +61,15 @@ function ListGames({ navigation }) {
                         <TouchableOpacity onPress={() => handleNavigate(item)}>
                             <SafeAreaView style={{flex:1},{flexDirection:"row"}}>
                                 <Image source={{uri: item.coverUrl}} style={styles.frame}/>
-                                <SafeAreaView style={styles.gamesDetails}>
+                                <SafeAreaView style={styles.gamesDetails, {width:"50%"}}>
                                     <Text style={[styles.mainText, global.fontColor]}>{item.name}</Text>
                                     <SafeAreaView style={{flexDirection:"row"}}>
                                         <Text style={styles.smallTextGrey}>Genres: </Text>
-                                        <Text style={styles.smallTextGreen}> {item.genres} </Text>
+                                        <Text style={styles.smallTextGreen}>{item.genres.map((o,i) => item.genres.length === i+1 ? o : o +"\n")} </Text>
                                     </SafeAreaView>
                                     <SafeAreaView style={{flexDirection:"row"}}>
                                         <Text style={styles.smallTextGrey}>Platforms: </Text>
-                                        <Text style={styles.smallTextGreen}> {item.platforms} </Text>
+                                        <Text style={styles.smallTextGreen}>{item.platforms.map((o,i)=> item.genres.length === i+1 ? o : o +"\n")} </Text>
                                     </SafeAreaView>
                                     <Favorite content={item}/>
                                 </SafeAreaView>
@@ -73,6 +81,8 @@ function ListGames({ navigation }) {
                 ): 
                 (
                     <>
+                        <Text style={[Style.fontG, global.fontColor]}>Nenhum item favoritado.</Text>
+                        <Button color="#494949" title="Back" onPress={()=>navigation.navigate('ExploreList')}/>
                     </>
                 )}
             </SafeAreaView>
@@ -99,7 +109,7 @@ const styles = StyleSheet.create({
         flex:1
     },   
     frame: {
-        marginTop: 10,
+        margin: 5,
         height: 175,
         width: 110,
         borderRadius: 10
@@ -108,11 +118,13 @@ const styles = StyleSheet.create({
         padding: 10,
         alignItems: 'flex-start'
     },
-    container: {
-        flex: 1,
-        margin: 0,
-        width: '100%',
-        height: '100%'
+    filterView: {
+        borderRadius:10, 
+        backgroundColor: '#484848',
+        flexDirection:"row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: 5
     }
     
 });

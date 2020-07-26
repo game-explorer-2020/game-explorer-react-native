@@ -30,8 +30,8 @@ function NewsFeed ({ navigation }) {
         navigation.navigate('WebViewNews', { url : item.url });
     }
   
-    function getData (props) {
-        return moment(new Date(props.data * 1000), "YYYYMMDD").fromNow();
+    function getDate (param) {
+        return moment(new Date(param.date * 1000), "YYYYMMDD").fromNow();
     }
 
     function renderFooter() {
@@ -52,8 +52,8 @@ function NewsFeed ({ navigation }) {
     function renderFooter() {
         if (loading) return null;
         return (
-          <View>
-            <ActivityIndicator />
+          <View style={[styles.centerLoading]}>
+            <ActivityIndicator size="large" color="#494949" />
           </View>
         );
     };
@@ -78,7 +78,7 @@ function NewsFeed ({ navigation }) {
                         <SafeAreaView style={styles.Row}>
                             <Favorite content={item}/>  
                             <Text style={[Style.fontP, styles.timeStamp]}>
-                                {getData({data: item.publishedAt})}
+                                {getDate({date: item.publishedAt})}
                             </Text>
                         </SafeAreaView>
                 </SafeAreaView>
@@ -105,13 +105,22 @@ const styles = StyleSheet.create({
     newsText: {
         paddingTop: 5,
         paddingBottom: 3,
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
     },
     timeStamp: {
         alignItems: 'flex-end',
         fontSize: 15,
         color: '#494949',
         letterSpacing: 0.15
+    },
+    centerLoading: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: 10,
+        left: 10,
+        right: 10,
     }
 })
 

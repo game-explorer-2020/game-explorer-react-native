@@ -1,6 +1,7 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import ListGames from './screens/ListGames';
 import ExploreList from './screens/ExploreList';
+import GameDetails from './screens/GameDetails';
 
 const screens = {
     ExploreList: {
@@ -9,6 +10,9 @@ const screens = {
     ListGames: {
         screen: ListGames
     },
+    GameDetails: {
+        screen: GameDetails
+    }
 }
 
 

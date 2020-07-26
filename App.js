@@ -9,9 +9,8 @@ const AppIndex = createAppContainer(Navigator)
 
 export default function App({ route }) {
     const [isMainScreen, setIsMainScreen] = useState(true);
-    const [currentScene, setCurrenteScene] = useState();
-
     return  (
+        <>
             <SafeAreaView style={styles.wrapper}>
                 <StatusBar style="auto" />
                 { isMainScreen  ? 
@@ -22,14 +21,14 @@ export default function App({ route }) {
                         <BackTitle name="News"/>
                 }
             </SafeAreaView>
+        </>
     );
 }
 
 const styles = StyleSheet.create({  
     wrapper: {  
         flex:1,
-        maxHeight: "100%",
-        maxWidth: "100%"
+        bottom: 'never'
     }
 });  
 
