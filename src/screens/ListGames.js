@@ -71,7 +71,7 @@ function ListGames({ navigation }) {
                                         <Text style={styles.smallTextGrey}>Platforms: </Text>
                                         <Text style={styles.smallTextGreen}>{item.platforms.map((o,i)=> item.genres.length === i+1 ? o : o +"\n")} </Text>
                                     </SafeAreaView>
-                                    <Favorite content={item}/>
+                                    <Favorite content={item} size={14}/>
                                 </SafeAreaView>
                             </SafeAreaView>
                         </TouchableOpacity>

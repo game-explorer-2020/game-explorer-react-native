@@ -11,10 +11,6 @@ function Carousel ( props, { navigation }) {
     
     useEffect(() => {
         async function loadMyList() {
-            if(props.list!=null) { 
-                setMyList(props.list)
-                return
-            }
             if(props.isGame){
                 const response = await api.get('games');
                 setMyList([...response.data]);
@@ -41,7 +37,7 @@ function Carousel ( props, { navigation }) {
             keyExtractor={(item,index) => index.toString()}
             horizontal
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => props.list !== null ? loadNewDetails(item.id) : props.isGame?props.showItem('GameDetails', item.id):props.showItem('WebViewNews', item.url)}>
+                <TouchableOpacity onPress={() => props.isGame?props.showItem('GameDetails', item.id):props.showItem('WebViewNews', item.url)}>
                     <Image source={props.isGame?{uri: item.coverUrl}:{uri: item.imageUrl}} style={styles.frame}/>
                 </TouchableOpacity>
             )}/>

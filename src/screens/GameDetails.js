@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, ScrollView, Image, Button, ActivityIndicator} from 'react-native';
 import Style from '../styles/Style'
-import Carousel from '../components/Carousel'
+import Carousel from '../components/CarouselSimilarGames'
 import api from '../services/api';
 import Favorite from '../components/Favorite'
 import moment from 'moment';
@@ -24,6 +24,13 @@ function GameDetails ({ navigation }) {
         }, 100)
     } 
 
+    function loadNewDetails( id ) {
+        console.log(id)
+        setLoading(true);
+        setGameId(id);
+        loadGameDetails();
+    }
+
     function getDate (params) {
         return moment(new Date(params.date * 1000), "YYYY MM DD HH:mm").format('LL');
     }
@@ -39,31 +46,18 @@ function GameDetails ({ navigation }) {
             return "Good"
         if(params.score < 90)
             return "Great"
-        if(params.score < 100)
+        if(params.score <= 100)
             return "Masterpiece"
     }
 
-    function loadnewDetails( id ) {
-        setGameId(id);
-        loadGameDetails();
-    }
-
-    function navigateToList( route, items ) {
-        navigation.navigate(route, {list: items});
-    }
-  
-    function navigateToItem( route, item ) {
-        navigation.navigate(route, {gameId: item});
-    }
-
-
     return (  
-        <ScrollView style={[Style.container]}>
+        <>
         {loading ? (
             <SafeAreaView style={[styles.centerLoading]}>
                 <ActivityIndicator size="large" color="#494949" />
             </SafeAreaView> 
-            ) : (  
+        ) : (
+            <ScrollView style={[Style.container]}>
                 <>    
                 <SafeAreaView style={{flexDirection:"row"}}>
                 <Image source={{uri: game.coverUrl}} style={styles.frame}/>
@@ -83,7 +77,7 @@ function GameDetails ({ navigation }) {
                     <SafeAreaView style={{flex:1, alignContent:"center", justifyContent: 'center', marginTop:5}}>
                         <Text style={[Style.fontG], styles.smallTextGrey}>{getDate({date: game.releaseDate})}</Text>
                         <Text style={[Style.fontG], styles.smallTextGrey}>{game.involvedCompanies[0]} </Text>
-                        <Favorite content={game}/>
+                        <Favorite content={game} size={16}/>
                     </SafeAreaView>
                     {(game.aggregatedRating) ?
                     (
@@ -109,11 +103,12 @@ function GameDetails ({ navigation }) {
                 <SafeAreaView style={{flex:1}}>
                         <Text style={[Style.fontP, global.fontColor, styles.summaryText]}>{game.summary}</Text>
                 </SafeAreaView>
-                <Carousel name={"Similar Games"} isGame={true} showList={navigateToList} showItem={navigateToItem} loadNewDetails={loadNewDetails} list={game.similarGames}/> 
+                <Carousel loadNewDetails={loadNewDetails(id)} list={game.similarGames}/> 
                 <Button color="#494949" title="Back" onPress={()=>navigation.navigate('ExploreList')} style={{marginTop: 20}}/>
               </>  
-            )}   
         </ScrollView>
+            )}   
+        </>
     )
  }
     
@@ -144,9 +139,9 @@ function GameDetails ({ navigation }) {
     },
     frame: {
         margin: 5,
-        height: 150,
+        height: 175,
         width: 150,
-        borderRadius: 10
+        borderRadius: 5
     },
     gamesDetails: {
         padding: 10,

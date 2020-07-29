@@ -76,7 +76,7 @@ function NewsFeed ({ navigation }) {
                     </TouchableOpacity>
                         <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
                         <SafeAreaView style={styles.Row}>
-                            <Favorite content={item}/>  
+                            <Favorite content={item} size={14}/>  
                             <Text style={[Style.fontP, styles.timeStamp]}>
                                 {getDate({date: item.publishedAt})}
                             </Text>

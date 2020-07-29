@@ -27,8 +27,7 @@ export default function App({ route }) {
 
 const styles = StyleSheet.create({  
     wrapper: {  
-        flex:1,
-        bottom: 'never'
+        flex:1
     }
 });  
 

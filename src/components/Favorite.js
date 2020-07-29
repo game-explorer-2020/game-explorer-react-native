@@ -15,8 +15,8 @@ export default props => {
 
     return (
         <>
-            <TouchableOpacity onPress={() => favoriteItem(props.content)}>
-                <Icon name={currentHeart} size={14} color="#17B978" />
+            <TouchableOpacity style={{ justifyContent: 'center' }} onPress={() => favoriteItem(props.content)}>
+                <Icon name={currentHeart} size={props.size} color="#17B978" />
             </TouchableOpacity>
         </>
     )
