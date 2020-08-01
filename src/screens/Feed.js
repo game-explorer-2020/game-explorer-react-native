@@ -1,11 +1,11 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import Navigator from '../routes'
+import NewsFeed from './NewsFeed'
 
 export default function Feed() {
-  return (
+    return (
     <SafeAreaView style={global.backgroundColor}>
-      < Navigator />
+        <NewsFeed/> 
     </SafeAreaView>
-  );
+    );
 }

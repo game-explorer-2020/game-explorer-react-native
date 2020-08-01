@@ -28,7 +28,7 @@ function Carousel ( props, { navigation }) {
         <SafeAreaView style={{flex:1},{width:330}}>
             <SafeAreaView style={styles.Row}>
                 <Text style={[Style.fontP, global.fontColor]}>{props.name}</Text>
-                <TouchableOpacity onPress={() => props.showList(props.isGame?'ListGames':'ListFeed', myList)}>
+                <TouchableOpacity onPress={() => props.showList(props.isGame?'GameList':'FeedList', myList)}>
                     <Text style={[global.fontColor, {fontSize: 13}]}>SEE ALL →</Text>
                 </TouchableOpacity>
             </SafeAreaView>

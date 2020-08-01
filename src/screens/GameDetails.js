@@ -24,10 +24,10 @@ function GameDetails ({ navigation }) {
         }, 100)
     } 
 
-    function loadNewDetails( id ) {
-        console.log(id)
+    async function loadNewDetails( id ) {
+        if(loading) return;
+        await setGameId(id);
         setLoading(true);
-        setGameId(id);
         loadGameDetails();
     }
 
@@ -57,7 +57,7 @@ function GameDetails ({ navigation }) {
                 <ActivityIndicator size="large" color="#494949" />
             </SafeAreaView> 
         ) : (
-            <ScrollView style={[Style.container]}>
+            <ScrollView style={[Style.container], global.backgroundColor}>
                 <>    
                 <SafeAreaView style={{flexDirection:"row"}}>
                 <Image source={{uri: game.coverUrl}} style={styles.frame}/>
@@ -103,10 +103,10 @@ function GameDetails ({ navigation }) {
                 <SafeAreaView style={{flex:1}}>
                         <Text style={[Style.fontP, global.fontColor, styles.summaryText]}>{game.summary}</Text>
                 </SafeAreaView>
-                <Carousel loadNewDetails={loadNewDetails(id)} list={game.similarGames}/> 
+                <Carousel loadNewDetails={loadNewDetails} list={game.similarGames}/> 
                 <Button color="#494949" title="Back" onPress={()=>navigation.navigate('ExploreList')} style={{marginTop: 20}}/>
               </>  
-        </ScrollView>
+            </ScrollView>
             )}   
         </>
     )
@@ -118,20 +118,20 @@ function GameDetails ({ navigation }) {
         flexWrap: 'wrap'
     },
     smallTextGrey: {
-        fontSize: 13,
+        fontSize: 14,
         color:"#494949",
         alignItems: 'flex-start',
         textAlign: 'center',
         flexWrap: 'wrap'
     },
     smallTextGreen: {
-        fontSize: 13,
+        fontSize: 14,
         color:"#17B978",
         alignItems: 'flex-start',
         flexWrap: 'wrap'
     },   
     mediumTextGreen: {
-        fontSize: 15,
+        fontSize: 16,
         color:"#17B978",
         alignItems: 'flex-start',
         textAlign: 'center',

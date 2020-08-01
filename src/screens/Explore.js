@@ -1,11 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
-import Navigator from '../routes2'
+import { SafeAreaView } from 'react-native';
+import ExploreList from './ExploreList'
 
 export default function Explore() {
-  return (
-    <View style={global.backgroundColor}>
-      <Navigator/> 
-    </View>
-  );
+    return (
+    <SafeAreaView style={global.backgroundColor}>
+        <ExploreList/> 
+    </SafeAreaView>
+    );
 }

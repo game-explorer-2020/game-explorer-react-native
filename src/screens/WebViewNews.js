@@ -13,7 +13,6 @@ export default class WebViewNews extends Component {
               source={{ uri: source }}
               style={styles.video}
           />
-          <Button color="#494949" title="Back" onPress={()=>this.props.navigation.navigate('NewsFeed')}/>
         </View>
       );
     }
@@ -21,9 +20,10 @@ export default class WebViewNews extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 0,
-    width: 365,
-    height: 475
+    flex:1,
+    margin:0,
+    width:'100%',
+    height:'100%'
   },
   video: {
     alignItems: 'center'

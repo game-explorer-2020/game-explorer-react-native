@@ -19,7 +19,7 @@ function NewsFeed ({ navigation }) {
     loadFeeds = async () => {
         if(loading) return;
         setLoading(true)
-        const response = await api.get('feeds?offset='+currentPage);
+        const response = await api.get('feeds?page='+currentPage);
         setTimeout(() => {
             setFeeds([...feeds, ...response.data]);
             setLoading(false);
@@ -33,28 +33,19 @@ function NewsFeed ({ navigation }) {
     function getDate (param) {
         return moment(new Date(param.date * 1000), "YYYYMMDD").fromNow();
     }
-
-    function renderFooter() {
-        if (!loading) return null;
-        return (
-          <SafeAreaView>
-            <ActivityIndicator />
-          </SafeAreaView>
-        );
-    };
-                  
-    function handleLoadMore () {
+         
+    async function handleLoadMore () {
         if(loading) return;
-        setCurrentPage(currentPage + 1);
+        await setCurrentPage(currentPage + 1);
         loadFeeds();
     };
 
     function renderFooter() {
-        if (loading) return null;
+        if (!loading) return null;
         return (
-          <View style={[styles.centerLoading]}>
-            <ActivityIndicator size="large" color="#494949" />
-          </View>
+        <SafeAreaView style={[styles.centerLoading]}>
+            <ActivityIndicator size="large"/>
+        </SafeAreaView>
         );
     };
 
@@ -68,7 +59,7 @@ function NewsFeed ({ navigation }) {
                 onEndReached={handleLoadMore}
                 onEndThreshold={0.1}    
                 contentContainerStyle={{ flexGrow: 1 }}
-                ListFooterComponen={renderFooter}
+                ListFooterComponent={renderFooter}
                 renderItem={({ item }) => (
                 <SafeAreaView>
                     <TouchableOpacity onPress={() => handleNavigate(item)}>
@@ -121,6 +112,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         left: 10,
         right: 10,
+        zIndex: 10
     }
 })
 
