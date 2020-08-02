@@ -43,38 +43,44 @@ function NewsFeed ({ navigation }) {
     function renderFooter() {
         if (!loading) return null;
         return (
-        <SafeAreaView style={[styles.centerLoading]}>
+        <SafeAreaView style={[styles.bottomLoading]}>
             <ActivityIndicator size="large"/>
         </SafeAreaView>
         );
     };
 
-    return (           
+    return (     
         <>
-            <FlatList
-                data={feeds}
-                keyExtractor={(item,index) => index.toString()}
-                vertical
-                showsHorizontalScrollIndicator={true}
-                onEndReached={handleLoadMore}
-                onEndThreshold={0.1}    
-                contentContainerStyle={{ flexGrow: 1 }}
-                ListFooterComponent={renderFooter}
-                renderItem={({ item }) => (
-                <SafeAreaView>
-                    <TouchableOpacity onPress={() => handleNavigate(item)}>
-                        <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
-                    </TouchableOpacity>
-                        <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
-                        <SafeAreaView style={styles.Row}>
-                            <Favorite content={item} size={14}/>  
-                            <Text style={[Style.fontP, styles.timeStamp]}>
-                                {getDate({date: item.publishedAt})}
-                            </Text>
-                        </SafeAreaView>
-                </SafeAreaView>
-                )}
-            />
+            {loading ? (
+                <SafeAreaView style={[styles.centerLoading]}>
+                    <ActivityIndicator size="large" color="#494949" />
+                </SafeAreaView> 
+            ) : (
+                <FlatList
+                    data={feeds}
+                    keyExtractor={(item,index) => index.toString()}
+                    vertical
+                    showsHorizontalScrollIndicator={true}
+                    onEndReached={handleLoadMore}
+                    onEndThreshold={0.1}    
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    ListFooterComponent={renderFooter}
+                    renderItem={({ item }) => (
+                    <SafeAreaView>
+                        <TouchableOpacity onPress={() => handleNavigate(item)}>
+                            <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
+                        </TouchableOpacity>
+                            <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
+                            <SafeAreaView style={styles.Row}>
+                                <Favorite content={item} size={14}/>  
+                                <Text style={[Style.fontP, styles.timeStamp]}>
+                                    {getDate({date: item.publishedAt})}
+                                </Text>
+                            </SafeAreaView>
+                    </SafeAreaView>
+                    )}
+                />
+            )}
         </>
     )
  }
@@ -104,7 +110,7 @@ const styles = StyleSheet.create({
         color: '#494949',
         letterSpacing: 0.15
     },
-    centerLoading: {
+    bottomLoading: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -113,6 +119,11 @@ const styles = StyleSheet.create({
         left: 10,
         right: 10,
         zIndex: 10
+    },
+    centerLoading: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })
 

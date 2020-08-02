@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, ScrollView, Image, Button, ActivityIndicator} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, ScrollView, Image, ActivityIndicator} from 'react-native';
 import Style from '../styles/Style'
 import Carousel from '../components/CarouselSimilarGames'
 import api from '../services/api';
@@ -59,53 +59,52 @@ function GameDetails ({ navigation }) {
         ) : (
             <ScrollView style={[Style.container], global.backgroundColor}>
                 <>    
-                <SafeAreaView style={{flexDirection:"row"}}>
-                <Image source={{uri: game.coverUrl}} style={styles.frame}/>
-                    <SafeAreaView style={styles.gamesDetails, {width:"50%", flex:1}}>
-                        <Text style={[styles.mainText, global.fontColor]}>{game.name}</Text>
-                        <SafeAreaView style={{flexDirection:"row", flexWrap: 'wrap'}}>
-                            <Text style={[Style.fontP], styles.smallTextGrey}>Genres: </Text>
-                            <Text style={[Style.fontP], styles.smallTextGreen}>{game.genres.map((o,i) => game.genres.length === i+1 ? o : o +"\n")} </Text>
+                    <SafeAreaView style={{flexDirection:"row"}}>
+                    <Image source={{uri: game.coverUrl}} style={styles.frame}/>
+                        <SafeAreaView style={styles.gamesDetails, {width:"50%", flex:1}}>
+                            <Text style={[styles.mainText, global.fontColor]}>{game.name}</Text>
+                            <SafeAreaView style={{flexDirection:"row", flexWrap: 'wrap'}}>
+                                <Text style={[Style.fontP], styles.smallTextGrey}>Genres: </Text>
+                                <Text style={[Style.fontP], styles.smallTextGreen}>{game.genres.map((o,i) => game.genres.length === i+1 ? o : o +"\n")} </Text>
+                            </SafeAreaView>
+                            <SafeAreaView style={{flexDirection:"row", flexWrap: 'wrap'}}>
+                                <Text style={[Style.fontP], styles.smallTextGrey}>Platforms: </Text>
+                                <Text style={[Style.fontP], styles.smallTextGreen}>{game.platforms.map((o,i) => game.genres.length === i+1 ? o : o +"\n")} </Text>
+                            </SafeAreaView>
                         </SafeAreaView>
-                        <SafeAreaView style={{flexDirection:"row", flexWrap: 'wrap'}}>
-                            <Text style={[Style.fontP], styles.smallTextGrey}>Platforms: </Text>
-                            <Text style={[Style.fontP], styles.smallTextGreen}>{game.platforms.map((o,i) => game.genres.length === i+1 ? o : o +"\n")} </Text>
+                    </SafeAreaView>
+                    <SafeAreaView style={[styles.Row]}>
+                        <SafeAreaView style={{flex:1, alignContent:"center", justifyContent: 'center', marginTop:5}}>
+                            <Text style={[Style.fontG], styles.smallTextGrey}>{getDate({date: game.releaseDate})}</Text>
+                            <Text style={[Style.fontG], styles.smallTextGrey}>{game.involvedCompanies[0]} </Text>
+                            <Favorite content={game} size={16}/>
                         </SafeAreaView>
-                    </SafeAreaView>
-                </SafeAreaView>
-                <SafeAreaView style={[styles.Row]}>
-                    <SafeAreaView style={{flex:1, alignContent:"center", justifyContent: 'center', marginTop:5}}>
-                        <Text style={[Style.fontG], styles.smallTextGrey}>{getDate({date: game.releaseDate})}</Text>
-                        <Text style={[Style.fontG], styles.smallTextGrey}>{game.involvedCompanies[0]} </Text>
-                        <Favorite content={game} size={16}/>
-                    </SafeAreaView>
-                    {(game.aggregatedRating) ?
-                    (
-                    <SafeAreaView style={{flex:1, alignContent:"center"}}>
-                        <Text style={[Style.fontP, global.fontColor, styles.scoreLarge]}>{Math.floor(game.aggregatedRating)}</Text>
-                        <Text style={styles.mediumTextGreen}>{getScore({score: game.aggregatedRating})}</Text>
-                        <Text style={[Style.fontP, styles.smallTextGrey]}>Based on {game.aggregatedRatingCount} member ratings</Text>
-                    </SafeAreaView>
-                    ):(
+                        {(game.aggregatedRating) ?
+                        (
+                        <SafeAreaView style={{flex:1, alignContent:"center"}}>
+                            <Text style={[Style.fontP, global.fontColor, styles.scoreLarge]}>{Math.floor(game.aggregatedRating)}</Text>
+                            <Text style={styles.mediumTextGreen}>{getScore({score: game.aggregatedRating})}</Text>
+                            <Text style={[Style.fontP, styles.smallTextGrey]}>Based on {game.aggregatedRatingCount} member ratings</Text>
+                        </SafeAreaView>
+                        ):(
+                            null
+                        )}
+                        {(game.rating) ?
+                        (
+                        <SafeAreaView style={{flex:1, alignContent:"center"}}>
+                            <Text style={[Style.fontP, global.fontColor, styles.scoreLarge]}>{Math.floor(game.rating)}</Text>
+                            <Text style={styles.mediumTextGreen}>{getScore({score: game.rating})}</Text>
+                            <Text style={[Style.fontP, styles.smallTextGrey]}>Based on {game.ratingCount} critic ratings</Text>
+                        </SafeAreaView>
+                        ):(
                         null
-                    )}
-                    {(game.rating) ?
-                    (
-                    <SafeAreaView style={{flex:1, alignContent:"center"}}>
-                        <Text style={[Style.fontP, global.fontColor, styles.scoreLarge]}>{Math.floor(game.rating)}</Text>
-                        <Text style={styles.mediumTextGreen}>{getScore({score: game.rating})}</Text>
-                        <Text style={[Style.fontP, styles.smallTextGrey]}>Based on {game.ratingCount} critic ratings</Text>
+                        )}
                     </SafeAreaView>
-                    ):(
-                    null
-                    )}
-                </SafeAreaView>
-                <SafeAreaView style={{flex:1}}>
-                        <Text style={[Style.fontP, global.fontColor, styles.summaryText]}>{game.summary}</Text>
-                </SafeAreaView>
-                <Carousel loadNewDetails={loadNewDetails} list={game.similarGames}/> 
-                <Button color="#494949" title="Back" onPress={()=>navigation.navigate('ExploreList')} style={{marginTop: 20}}/>
-              </>  
+                    <SafeAreaView style={{flex:1}}>
+                            <Text style={[Style.fontP, global.fontColor, styles.summaryText]}>{game.summary}</Text>
+                    </SafeAreaView>
+                    <Carousel loadNewDetails={loadNewDetails} list={game.similarGames}/> 
+                </>  
             </ScrollView>
             )}   
         </>

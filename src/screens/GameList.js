@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, Button, TextInput } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
 import Style from '../styles/Style'
 import { withNavigation } from 'react-navigation';
 import Favorite from '../components/Favorite';
@@ -51,38 +51,36 @@ function GameList({ navigation }) {
 
                 { games.length > 0 ? (
                 <>
-                <FlatList
-                    data={games}
-                    keyExtractor={(item,index) => index.toString()}
-                    vertical
-                    showsHorizontalScrollIndicator={false} 
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => handleNavigate(item)}>
-                            <SafeAreaView style={{flex:1},{flexDirection:"row"}}>
-                                <Image source={{uri: item.coverUrl}} style={styles.frame}/>
-                                <SafeAreaView style={styles.gamesDetails, {width:"50%"}}>
-                                    <Text style={[styles.mainText, global.fontColor]}>{item.name}</Text>
-                                    <SafeAreaView style={{flexDirection:"row"}}>
-                                        <Text style={styles.smallTextGrey}>Genres: </Text>
-                                        <Text style={styles.smallTextGreen}>{item.genres.map((o,i) => item.genres.length === i+1 ? o : o +"\n")} </Text>
+                    <FlatList
+                        data={games}
+                        keyExtractor={(item,index) => index.toString()}
+                        vertical
+                        showsHorizontalScrollIndicator={false} 
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => handleNavigate(item)}>
+                                <SafeAreaView style={{flex:1},{flexDirection:"row"}}>
+                                    <Image source={{uri: item.coverUrl}} style={styles.frame}/>
+                                    <SafeAreaView style={styles.gamesDetails, {width:"50%"}}>
+                                        <Text style={[styles.mainText, global.fontColor]}>{item.name}</Text>
+                                        <SafeAreaView style={{flexDirection:"row"}}>
+                                            <Text style={styles.smallTextGrey}>Genres: </Text>
+                                            <Text style={styles.smallTextGreen}>{item.genres.map((o,i) => item.genres.length === i+1 ? o : o +"\n")} </Text>
+                                        </SafeAreaView>
+                                        <SafeAreaView style={{flexDirection:"row"}}>
+                                            <Text style={styles.smallTextGrey}>Platforms: </Text>
+                                            <Text style={styles.smallTextGreen}>{item.platforms.map((o,i)=> item.genres.length === i+1 ? o : o +"\n")} </Text>
+                                        </SafeAreaView>
+                                        <Favorite content={item} size={14}/>
                                     </SafeAreaView>
-                                    <SafeAreaView style={{flexDirection:"row"}}>
-                                        <Text style={styles.smallTextGrey}>Platforms: </Text>
-                                        <Text style={styles.smallTextGreen}>{item.platforms.map((o,i)=> item.genres.length === i+1 ? o : o +"\n")} </Text>
-                                    </SafeAreaView>
-                                    <Favorite content={item} size={14}/>
                                 </SafeAreaView>
-                            </SafeAreaView>
-                        </TouchableOpacity>
-                )}/>
-                <Button color="#494949" title="Back" onPress={()=>navigation.navigate('ExploreList')}/>
+                            </TouchableOpacity>
+                    )}/>
                 </>
                 ): 
                 (
                     <>
                         <Text style={[Style.fontG, global.fontColor]}>Nenhum item favoritado.</Text>
-                        <Button color="#494949" title="Back" onPress={()=>navigation.navigate('ExploreList')}/>
                     </>
                 )}
             </SafeAreaView>
