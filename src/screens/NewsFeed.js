@@ -70,9 +70,9 @@ function NewsFeed ({ navigation }) {
                         <TouchableOpacity onPress={() => handleNavigate(item)}>
                             <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
                         </TouchableOpacity>
-                            <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
+                            <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}{item.id}</Text>
                             <SafeAreaView style={styles.Row}>
-                                <Favorite content={item} size={14}/>  
+                                <Favorite heart={item.isFavorite?'heart':'heart-o'} isFavorite={item.favorite} isGame={false} contentId={item.id} size={14}/>  
                                 <Text style={[Style.fontP, styles.timeStamp]}>
                                     {getDate({date: item.publishedAt})}
                                 </Text>

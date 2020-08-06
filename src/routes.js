@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import Home from './screens/Home';
 import Navigator from './Navigator'
-import ExploreList from './screens/ExploreList';
-import NewsFeed from './screens/NewsFeed';
 import WebViewNews from './screens/WebViewNews';
 import GameList from './screens/GameList';
 import GameDetails from './screens/GameDetails';
-
+import FavoriteNews from './screens/FavoriteNews';
 
 const screens = {
 
@@ -19,7 +15,6 @@ const screens = {
             headerTintColor: 'white',
             headerStyle: {
                 backgroundColor: 'black'
-                //fontFamily: 'Nunito-Bold.ttf',
             }
         }
     },
@@ -30,7 +25,6 @@ const screens = {
             headerTintColor: 'white',
             headerStyle: {
                 backgroundColor: 'black'
-                //fontFamily: 'Nunito-Bold.ttf',
             }
         }
     },
@@ -41,7 +35,6 @@ const screens = {
             headerTintColor: 'white',
             headerStyle: {
                 backgroundColor: 'black'
-                //fontFamily: 'Nunito-Bold.ttf',
             }
         }
     },
@@ -52,7 +45,16 @@ const screens = {
             headerTintColor: 'white',
             headerStyle: {
                 backgroundColor: 'black'
-                //fontFamily: 'Nunito-Bold.ttf',
+            }
+        }
+    },
+    FavoriteNews: {
+        screen: FavoriteNews,
+        navigationOptions: {
+            headerTitle: 'Favorite News',
+            headerTintColor: 'white',
+            headerStyle: {
+                backgroundColor: 'black'
             }
         }
     }

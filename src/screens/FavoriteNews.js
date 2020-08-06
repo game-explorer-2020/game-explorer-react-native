@@ -8,7 +8,7 @@ import Favorite from '../components/Favorite'
 
 function NewsFeed ({ navigation }) {
 
-    const [feeds, setFeeds] = useState([]);
+    const [feeds, setFeeds] = useState(navigation.state.params.list);
     const [currentPage, setCurrentPage] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -19,7 +19,7 @@ function NewsFeed ({ navigation }) {
     loadFeeds = async () => {
         if(loading) return;
         setLoading(true)
-        const response = await api.get('feeds?offset='+currentPage);
+        const response = await api.get('feeds/favorites/?offset='+currentPage);
         setTimeout(() => {
             setFeeds([...feeds, ...response.data]);
             setLoading(false);
@@ -56,18 +56,16 @@ function NewsFeed ({ navigation }) {
                 keyExtractor={(item,index) => index.toString()}
                 vertical
                 showsHorizontalScrollIndicator={true}
-                onEndReached={handleLoadMore}
                 onEndThreshold={0.1}    
                 contentContainerStyle={{ flexGrow: 1 }}
-                ListFooterComponent={renderFooter}
                 renderItem={({ item }) => (
-                <SafeAreaView>
+                <SafeAreaView style={Style.backgroundDark}>
                     <TouchableOpacity onPress={() => handleNavigate(item)}>
                         <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
                     </TouchableOpacity>
                         <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
                         <SafeAreaView style={styles.Row}>
-                            <Favorite content={item} size={14}/>  
+                            <Favorite heart={item.favorite?'heart':'heart-o'} isFavorite={item.favorite} isGame={false} content={item.id} size={14}/>  
                             <Text style={[Style.fontP, styles.timeStamp]}>
                                 {getDate({date: item.publishedAt})}
                             </Text>
