@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text, StyleSheet, Image, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, Image, TouchableHighlight, FlatList, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Style from '../styles/Style';
 import api from '../services/api';
@@ -8,22 +8,26 @@ function Carousel(props) {
     const [popularGames, setPopularGames] = useState([]);
     const [favoriteGames, setFavoriteGames] = useState([]);
     const [favoriteNews, setFavoriteNews] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         loadMyList();
     }, []);
 
     loadMyList = async () => {
-        const response = await api.get('games');
-        const response2 = await api.get('games/favorites');
-        const response3 = await api.get('feeds/favorites');
-        setTimeout(() => {
-            setPopularGames([...response.data]);
-            setFavoriteGames([...response2.data]);
-            setFavoriteNews([...response3.data]);
-            setLoading(false);
-        }, 500);
+        if(loading) return null;
+        setLoading(true);
+            setInterval(async () => {
+            const response = await api.get('games');
+            const response2 = await api.get('games/favorites');
+            const response3 = await api.get('feeds/favorites');
+            setTimeout(() => {
+                setPopularGames([...response.data]);
+                setFavoriteGames([...response2.data]);
+                setFavoriteNews([...response3.data]);
+                setLoading(false);
+            }, 100);
+        }, 2500);
     };
 
     return (
@@ -37,54 +41,54 @@ function Carousel(props) {
                     <SafeAreaView style={({ flex: 1 }, { width: 330 })}>
                         <SafeAreaView style={styles.Row}>
                             <Text style={[Style.fontP, global.fontColor]}>Popular Games</Text>
-                            <TouchableOpacity onPress={() => props.showList('GameList', popularGames, '')}>
+                            <TouchableHighlight onPress={() => props.showList('GameList', popularGames, '')}>
                                 <Text style={[global.fontColor, { fontSize: 13 }]}>SEE ALL →</Text>
-                            </TouchableOpacity>
+                            </TouchableHighlight>
                         </SafeAreaView>
                         <FlatList
                             data={popularGames}
                             keyExtractor={(item, index) => index.toString()}
                             horizontal
                             renderItem={({ item }) => (
-                                <TouchableOpacity onPress={() => props.showItem('GameDetails', item.id)}>
+                                <TouchableHighlight onPress={() => props.showItem('GameDetails', item.id)}>
                                     <Image source={{ uri: item.coverUrl }} style={styles.frame} />
-                                </TouchableOpacity>
+                                </TouchableHighlight>
                             )}
                         />
                     </SafeAreaView>
                     <SafeAreaView style={({ flex: 1 }, { width: 330 })}>
                         <SafeAreaView style={styles.Row}>
                             <Text style={[Style.fontP, global.fontColor]}>Favorite Games</Text>
-                            <TouchableOpacity onPress={() => props.showList('GameList', favoriteGames, '/favorites')}>
+                            <TouchableHighlight onPress={() => props.showList('GameList', favoriteGames, '/favorites')}>
                                 <Text style={[global.fontColor, { fontSize: 13 }]}>SEE ALL →</Text>
-                            </TouchableOpacity>
+                            </TouchableHighlight>
                         </SafeAreaView>
                         <FlatList
                             data={favoriteGames}
                             keyExtractor={(item, index) => index.toString()}
                             horizontal
                             renderItem={({ item }) => (
-                                <TouchableOpacity onPress={() => props.showItem('GameDetails', item.id)}>
+                                <TouchableHighlight onPress={() => props.showItem('GameDetails', item.id)}>
                                     <Image source={{ uri: item.coverUrl }} style={styles.frame} />
-                                </TouchableOpacity>
+                                </TouchableHighlight>
                             )}
                         />
                     </SafeAreaView>
                     <SafeAreaView style={({ flex: 1 }, { width: 330 })}>
                         <SafeAreaView style={styles.Row}>
                             <Text style={[Style.fontP, global.fontColor]}>Favorite News</Text>
-                            <TouchableOpacity onPress={() => props.showList('FavoriteNews', favoriteNews)}>
+                            <TouchableHighlight onPress={() => props.showList('FavoriteNews', favoriteNews)}>
                                 <Text style={[global.fontColor, { fontSize: 13 }]}>SEE ALL →</Text>
-                            </TouchableOpacity>
+                            </TouchableHighlight>
                         </SafeAreaView>
                         <FlatList
                             data={favoriteNews}
                             keyExtractor={(item, index) => index.toString()}
                             horizontal
                             renderItem={({ item }) => (
-                                <TouchableOpacity onPress={() => props.showItem('WebViewNews', item.url)}>
+                                <TouchableHighlight onPress={() => props.showItem('WebViewNews', item.url)}>
                                     <Image source={{ uri: item.imageUrl }} style={styles.frame} />
-                                </TouchableOpacity>
+                                </TouchableHighlight>
                             )}
                         />
                     </SafeAreaView>

@@ -75,7 +75,12 @@ function GameDetails({ navigation }) {
                             <SafeAreaView style={{ flex: 1, alignContent: 'center', justifyContent: 'center', marginTop: 5 }}>
                                 <Text style={([Style.fontG], styles.smallTextGrey)}>{getDate({ date: game.releaseDate })}</Text>
                                 <Text style={([Style.fontG], styles.smallTextGrey)}>{game.involvedCompanies[0]} </Text>
-                                <Favorite heart={game.favorite ? 'heart' : 'heart-o'} isFavorite={item.favorite} isGame={true} contentId={game.id} size={16} />
+                                <Favorite
+                                    heart={game.favorite ? 'heart' : 'heart-o'}
+                                    isGame={true}
+                                    contentId={game.id}
+                                    size={16}
+                                />
                             </SafeAreaView>
                             {game.aggregatedRating ? (
                                 <SafeAreaView style={{ flex: 1, alignContent: 'center' }}>

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { withNavigation } from 'react-navigation';
-import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import Style from '../styles/Style'
+import { SafeAreaView, StyleSheet, Text, FlatList, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
+import Style from '../styles/Style';
 import moment from 'moment';
 import api from '../services/api';
-import Favorite from '../components/Favorite'
+import { withNavigation } from 'react-navigation';
+import Favorite from '../components/Favorite';
 
-function NewsFeed ({ navigation }) {
-
+function NewsFeed({ navigation }) {
     const [feeds, setFeeds] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -17,79 +16,83 @@ function NewsFeed ({ navigation }) {
     }, []);
 
     loadFeeds = async () => {
-        if(loading) return;
-        setLoading(true)
-        const response = await api.get('feeds?page='+currentPage);
+        if (loading) return;
+        setLoading(true);
+        const response = await api.get('feeds?page=' + currentPage);
         setTimeout(() => {
             setFeeds([...feeds, ...response.data]);
             setLoading(false);
-        }, 100)
-    } 
+        }, 200);
+    };
 
-    function handleNavigate( item ) {
-        navigation.navigate('WebViewNews', { url : item.url });
+    function handleNavigate(item) {
+        navigation.navigate('WebViewNews', { url: item.url });
     }
-  
-    function getDate (param) {
-        return moment(new Date(param.date * 1000), "YYYYMMDD").fromNow();
+
+    function getDate(param) {
+        return moment(new Date(param.date * 1000), 'YYYYMMDD').fromNow();
     }
-         
-    async function handleLoadMore () {
-        if(loading) return;
+
+    async function handleLoadMore() {
+        if (loading) return;
         await setCurrentPage(currentPage + 1);
         loadFeeds();
-    };
+    }
 
     function renderFooter() {
         if (!loading) return null;
         return (
-        <SafeAreaView style={[styles.bottomLoading]}>
-            <ActivityIndicator size="large"/>
-        </SafeAreaView>
+            <SafeAreaView style={[styles.bottomLoading]}>
+                <ActivityIndicator size="large" />
+            </SafeAreaView>
         );
-    };
+    }
 
-    return (     
+    return (
         <>
             {loading ? (
                 <SafeAreaView style={[styles.centerLoading]}>
                     <ActivityIndicator size="large" color="#494949" />
-                </SafeAreaView> 
+                </SafeAreaView>
             ) : (
-                <FlatList
-                    data={feeds}
-                    keyExtractor={(item,index) => index.toString()}
-                    vertical
-                    showsHorizontalScrollIndicator={true}
-                    onEndReached={handleLoadMore}
-                    onEndThreshold={0.1}    
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    ListFooterComponent={renderFooter}
-                    renderItem={({ item }) => (
-                    <SafeAreaView>
-                        <TouchableOpacity onPress={() => handleNavigate(item)}>
-                            <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
-                        </TouchableOpacity>
-                            <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}{item.id}</Text>
-                            <SafeAreaView style={styles.Row}>
-                                <Favorite heart={item.isFavorite?'heart':'heart-o'} isFavorite={item.favorite} isGame={false} contentId={item.id} size={14}/>  
-                                <Text style={[Style.fontP, styles.timeStamp]}>
-                                    {getDate({date: item.publishedAt})}
+                <>
+                    <FlatList
+                        data={feeds}
+                        extraData={feeds}
+                        vertical
+                        keyExtractor={(item, index) => index.toString()}
+                        showsHorizontalScrollIndicator={false}
+                        onEndReached={handleLoadMore}
+                        onEndThreshold={0.1}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        ListFooterComponent={renderFooter}
+                        renderItem={({ item }) => (
+                            <>
+                                <TouchableHighlight onPress={() => handleNavigate(item)}>
+                                    <Image source={{ uri: item.imageUrl }} style={styles.frame}></Image>
+                                </TouchableHighlight>
+                                <Text style={[Style.fontP, global.fontColor, styles.newsText]}>
+                                    {item.title}
+                                    {item.id}
                                 </Text>
-                            </SafeAreaView>
-                    </SafeAreaView>
-                    )}
-                />
+                                <SafeAreaView style={styles.Row}>
+                                    <Favorite heart={item.isFavorite ? 'heart' : 'heart-o'} isGame={false} contentId={item.id} size={14} />
+                                    <Text style={[Style.fontP, styles.timeStamp]}>{getDate({ date: item.publishedAt })}</Text>
+                                </SafeAreaView>
+                            </>
+                        )}
+                    />
+                </>
             )}
         </>
-    )
- }
-    
+    );
+}
+
 const styles = StyleSheet.create({
     Row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
         marginTop: 5,
         marginBottom: 15
     },
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
     newsText: {
         paddingTop: 5,
         paddingBottom: 3,
-        alignItems: 'flex-start',
+        alignItems: 'flex-start'
     },
     timeStamp: {
         alignItems: 'flex-end',
@@ -123,8 +126,8 @@ const styles = StyleSheet.create({
     centerLoading: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     }
-})
+});
 
 export default withNavigation(NewsFeed);

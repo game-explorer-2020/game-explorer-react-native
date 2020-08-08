@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native'
+import { SafeAreaView, Text, StyleSheet, Image, TouchableHighlight, FlatList } from 'react-native'
 import Style from '../styles/Style'
 
 export default function CarouselSimilarGames( props ) {
@@ -23,9 +23,9 @@ export default function CarouselSimilarGames( props ) {
             keyExtractor={(item,index) => index.toString()}
             horizontal
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => props.loadNewDetails(item.id)}>
+                <TouchableHighlight onPress={() => props.loadNewDetails(item.id)}>
                     <Image source={{uri: item.coverUrl}} style={styles.frame}/>
-                </TouchableOpacity>
+                </TouchableHighlight>
             )}/>
         </SafeAreaView>
     );

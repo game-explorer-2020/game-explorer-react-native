@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Button, View } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 export default class WebViewNews extends Component {
@@ -7,13 +7,13 @@ export default class WebViewNews extends Component {
   render(){
       const source = this.props.navigation.state.params.url;
       return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <WebView 
               originWhitelist={['*']}
               source={{ uri: source }}
               style={styles.video}
           />
-        </View>
+        </SafeAreaView>
       );
     }
 }

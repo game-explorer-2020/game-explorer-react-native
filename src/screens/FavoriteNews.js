@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { withNavigation } from 'react-navigation';
-import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import Style from '../styles/Style'
+import { SafeAreaView, StyleSheet, Text, FlatList, Image, TouchableHighlight, ActivityIndicator } from 'react-native';
+import Style from '../styles/Style';
 import moment from 'moment';
 import api from '../services/api';
-import Favorite from '../components/Favorite'
+import Favorite from '../components/Favorite';
 
-function NewsFeed ({ navigation }) {
-
+function NewsFeed({ navigation }) {
     const [feeds, setFeeds] = useState(navigation.state.params.list);
     const [currentPage, setCurrentPage] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -17,71 +16,69 @@ function NewsFeed ({ navigation }) {
     }, []);
 
     loadFeeds = async () => {
-        if(loading) return;
-        setLoading(true)
-        const response = await api.get('feeds/favorites/?offset='+currentPage);
+        if (loading) return;
+        setLoading(true);
+        const response = await api.get('feeds/favorites/?offset=' + currentPage);
         setTimeout(() => {
             setFeeds([...feeds, ...response.data]);
             setLoading(false);
-        }, 100)
-    } 
+        }, 100);
+    };
 
-    function handleNavigate( item ) {
-        navigation.navigate('WebViewNews', { url : item.url });
+    function handleNavigate(item) {
+        navigation.navigate('WebViewNews', { url: item.url });
     }
-  
-    function getDate (param) {
-        return moment(new Date(param.date * 1000), "YYYYMMDD").fromNow();
+
+    function getDate(param) {
+        return moment(new Date(param.date * 1000), 'YYYYMMDD').fromNow();
     }
-         
-    async function handleLoadMore () {
-        if(loading) return;
+
+    /*async function handleLoadMore() {
+        if (loading) return;
         await setCurrentPage(currentPage + 1);
         loadFeeds();
-    };
+    }
 
     function renderFooter() {
         if (!loading) return null;
         return (
-        <SafeAreaView style={[styles.centerLoading]}>
-            <ActivityIndicator size="large"/>
-        </SafeAreaView>
+            <SafeAreaView style={[styles.centerLoading]}>
+                <ActivityIndicator size="large" />
+            </SafeAreaView>
         );
-    };
+    }*/
 
-    return (           
+    return (
         <>
             <FlatList
                 data={feeds}
-                keyExtractor={(item,index) => index.toString()}
+                keyExtractor={(item, index) => index.toString}
                 vertical
-                showsHorizontalScrollIndicator={true}
-                onEndThreshold={0.1}    
+                showsHorizontalScrollIndicator={false}
+                onEndThreshold={0.1}
                 contentContainerStyle={{ flexGrow: 1 }}
                 renderItem={({ item }) => (
-                <SafeAreaView style={Style.backgroundDark}>
-                    <TouchableOpacity onPress={() => handleNavigate(item)}>
-                        <Image source={{uri: item.imageUrl}} style={styles.frame}></Image>
-                    </TouchableOpacity>
+                    <SafeAreaView style={Style.backgroundDark}>
+                        <TouchableHighlight onPress={() => handleNavigate(item)}>
+                            <Image source={{ uri: item.imageUrl }} style={styles.frame}></Image>
+                        </TouchableHighlight>
                         <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
                         <SafeAreaView style={styles.Row}>
-                            <Favorite heart={item.favorite?'heart':'heart-o'} isFavorite={item.favorite} isGame={false} content={item.id} size={14}/>  
-                            <Text style={[Style.fontP, styles.timeStamp]}>
-                                {getDate({date: item.publishedAt})}
-                            </Text>
+                            <Favorite heart={item.favorite ? 'heart' : 'heart-o'} isGame={false} contentId={item.id} size={14} />
+                            <Text style={[Style.fontP, styles.timeStamp]}>{getDate({ date: item.publishedAt })}</Text>
                         </SafeAreaView>
-                </SafeAreaView>
+                    </SafeAreaView>
                 )}
             />
         </>
-    )
- }
-    
+    );
+}
+
 const styles = StyleSheet.create({
     Row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
         marginTop: 5,
         marginBottom: 15
     },
@@ -94,7 +91,7 @@ const styles = StyleSheet.create({
     newsText: {
         paddingTop: 5,
         paddingBottom: 3,
-        alignItems: 'flex-start',
+        alignItems: 'flex-start'
     },
     timeStamp: {
         alignItems: 'flex-end',
@@ -105,13 +102,8 @@ const styles = StyleSheet.create({
     centerLoading: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        bottom: 10,
-        left: 10,
-        right: 10,
-        zIndex: 10
+        justifyContent: 'center'
     }
-})
+});
 
 export default withNavigation(NewsFeed);
