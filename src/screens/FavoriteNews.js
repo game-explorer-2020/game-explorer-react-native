@@ -8,7 +8,6 @@ import Favorite from '../components/Favorite';
 
 function NewsFeed({ navigation }) {
     const [feeds, setFeeds] = useState(navigation.state.params.list);
-    const [currentPage, setCurrentPage] = useState(0);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -18,7 +17,7 @@ function NewsFeed({ navigation }) {
     loadFeeds = async () => {
         if (loading) return;
         setLoading(true);
-        const response = await api.get('feeds/favorites/?offset=' + currentPage);
+        const response = await api.get('feeds/favorites');
         setTimeout(() => {
             setFeeds([...feeds, ...response.data]);
             setLoading(false);
@@ -33,26 +32,11 @@ function NewsFeed({ navigation }) {
         return moment(new Date(param.date * 1000), 'YYYYMMDD').fromNow();
     }
 
-    /*async function handleLoadMore() {
-        if (loading) return;
-        await setCurrentPage(currentPage + 1);
-        loadFeeds();
-    }
-
-    function renderFooter() {
-        if (!loading) return null;
-        return (
-            <SafeAreaView style={[styles.centerLoading]}>
-                <ActivityIndicator size="large" />
-            </SafeAreaView>
-        );
-    }*/
-
     return (
         <>
             <FlatList
                 data={feeds}
-                keyExtractor={(item, index) => index.toString}
+                keyExtractor={(item, index) => index.toString()}
                 vertical
                 showsHorizontalScrollIndicator={false}
                 onEndThreshold={0.1}

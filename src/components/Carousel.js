@@ -38,10 +38,10 @@ function Carousel(props) {
                 </SafeAreaView>
             ) : (
                 <>
-                    <SafeAreaView style={({ flex: 1 }, { width: 330 })}>
+                    <SafeAreaView style={{ flex: 1 }}>
                         <SafeAreaView style={styles.Row}>
                             <Text style={[Style.fontP, global.fontColor]}>Popular Games</Text>
-                            <TouchableHighlight onPress={() => props.showList('GameList', popularGames, '')}>
+                            <TouchableHighlight onPress={() => props.showList('GameList', popularGames)}>
                                 <Text style={[global.fontColor, { fontSize: 13 }]}>SEE ALL →</Text>
                             </TouchableHighlight>
                         </SafeAreaView>
@@ -56,10 +56,10 @@ function Carousel(props) {
                             )}
                         />
                     </SafeAreaView>
-                    <SafeAreaView style={({ flex: 1 }, { width: 330 })}>
+                    <SafeAreaView style={{ flex: 1 }}>
                         <SafeAreaView style={styles.Row}>
                             <Text style={[Style.fontP, global.fontColor]}>Favorite Games</Text>
-                            <TouchableHighlight onPress={() => props.showList('GameList', favoriteGames, '/favorites')}>
+                            <TouchableHighlight onPress={() => props.showList('GameList', favoriteGames, true)}>
                                 <Text style={[global.fontColor, { fontSize: 13 }]}>SEE ALL →</Text>
                             </TouchableHighlight>
                         </SafeAreaView>
@@ -74,7 +74,7 @@ function Carousel(props) {
                             )}
                         />
                     </SafeAreaView>
-                    <SafeAreaView style={({ flex: 1 }, { width: 330 })}>
+                    <SafeAreaView style={{ flex: 1 }}>
                         <SafeAreaView style={styles.Row}>
                             <Text style={[Style.fontP, global.fontColor]}>Favorite News</Text>
                             <TouchableHighlight onPress={() => props.showList('FavoriteNews', favoriteNews)}>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         height: 100,
         width: 100,
         borderRadius: 10,
-        marginRight: 10
+        marginRight: 5
     },
     centerLoading: {
         flex: 1,

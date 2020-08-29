@@ -71,10 +71,7 @@ function NewsFeed({ navigation }) {
                                 <TouchableHighlight onPress={() => handleNavigate(item)}>
                                     <Image source={{ uri: item.imageUrl }} style={styles.frame}></Image>
                                 </TouchableHighlight>
-                                <Text style={[Style.fontP, global.fontColor, styles.newsText]}>
-                                    {item.title}
-                                    {item.id}
-                                </Text>
+                                <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
                                 <SafeAreaView style={styles.Row}>
                                     <Favorite heart={item.isFavorite ? 'heart' : 'heart-o'} isGame={false} contentId={item.id} size={14} />
                                     <Text style={[Style.fontP, styles.timeStamp]}>{getDate({ date: item.publishedAt })}</Text>

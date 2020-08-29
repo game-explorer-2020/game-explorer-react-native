@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 function GameList({ navigation }) {
     const [games, setGames] = useState(navigation.state.params.list);
     const [filter, setFilter] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(navigation.state.params.isFavorite ? '/favorites' : '');
 
     useEffect(() => {
         loadGames();
@@ -16,11 +18,13 @@ function GameList({ navigation }) {
 
     loadGames = async () => {
         try {
-            if (filter == '') return;
-            const response = await api.get('games' + props.favoritePath + '"?term=' + filter);
+            if (loading || filter == '') return;
+            setLoading(true);
+            const response = await api.get('games' +isFavorite+ '?term=' + filter);
             setTimeout(() => {
                 setGames([...response.data]);
                 setFilter('');
+                setLoading(false);
             }, 200);
         } catch (err) {
             console.log(err);
@@ -28,6 +32,7 @@ function GameList({ navigation }) {
     };
 
     function handleLoadMore() {
+        if (loading || filter == '') return;
         loadGames();
     }
 
@@ -37,69 +42,77 @@ function GameList({ navigation }) {
 
     return (
         <>
-            <SafeAreaView style={[Style.container]}>
-                <SafeAreaView style={styles.filterView}>
-                    <TextInput
-                        style={[styles.textInput]}
-                        placeholder="Filter game name"
-                        placeholderTextColor="#7e7e7e"
-                        autoCorrect={false}
-                        style={[global.fontColor, { height: 35 }]}
-                        onChangeText={filter => setFilter(filter)}
-                        keyboard="default"
-                        multiline={false}
-                        onSubmitEditing={handleLoadMore}
-                        clearButtonMode="while-editing"
-                    />
-                    <Icon name={'search'} size={14} color="#7e7e7e" />
+            {loading ? (
+                <SafeAreaView style={([styles.centerLoading], global.backgroundColor)}>
+                    <ActivityIndicator size="large" color="#494949" />
                 </SafeAreaView>
+            ) : (
+                <>
+                    <SafeAreaView style={[Style.container]}>
+                        <SafeAreaView style={styles.filterView}>
+                            <TextInput
+                                style={[styles.textInput]}
+                                placeholder="Filter game name"
+                                placeholderTextColor="#7e7e7e"
+                                autoCorrect={false}
+                                style={[global.fontColor, { height: 40 }]}
+                                onChangeText={filter => setFilter(filter)}
+                                keyboard="default"
+                                multiline={false}
+                                onSubmitEditing={handleLoadMore}
+                                clearButtonMode="while-editing"
+                            />
+                            <Icon name={'search'} size={14} color="#7e7e7e" />
+                        </SafeAreaView>
 
-                {games.length > 0 ? (
-                    <>
-                        <FlatList
-                            data={games}
-                            keyExtractor={(item, index) => index.toString()}
-                            vertical
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ flexGrow: 1 }}
-                            renderItem={({ item }) => (
-                                <SafeAreaView style={({ flex: 1 }, { flexDirection: 'row' })}>
-                                    <TouchableHighlight onPress={() => handleNavigate(item)}>
-                                        <Image source={{ uri: item.coverUrl }} style={styles.frame} />
-                                    </TouchableHighlight>
-                                    <SafeAreaView style={(styles.gamesDetails, { width: '50%' })}>
-                                        <Text style={[styles.mainText, global.fontColor]}>{item.name}</Text>
-                                        <SafeAreaView style={{ flexDirection: 'row' }}>
-                                            <Text style={styles.smallTextGrey}>Genres: </Text>
-                                            <Text style={styles.smallTextGreen}>
-                                                {item.genres.map((o, i) => (item.genres.length === i + 1 ? o : o + '\n'))}{' '}
-                                            </Text>
+                        {games.length > 0 ? (
+                            <>
+                                <FlatList
+                                    data={games}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    vertical
+                                    showsHorizontalScrollIndicator={false}
+                                    contentContainerStyle={{ flexGrow: 1 }}
+                                    renderItem={({ item }) => (
+                                        <SafeAreaView style={({ flex: 1 }, { flexDirection: 'row' })}>
+                                            <TouchableHighlight onPress={() => handleNavigate(item)}>
+                                                <Image source={{ uri: item.coverUrl }} style={styles.frame} />
+                                            </TouchableHighlight>
+                                            <SafeAreaView style={(styles.gamesDetails, { width: '50%' })}>
+                                                <Text style={[styles.mainText, global.fontColor]}>{item.name}</Text>
+                                                <SafeAreaView style={{ flexDirection: 'row' }}>
+                                                    <Text style={styles.smallTextGrey}>Genres: </Text>
+                                                    <Text style={styles.smallTextGreen}>
+                                                        {item.genres.map((o, i) => (item.genres.length === i + 1 ? o : o + '\n'))}{' '}
+                                                    </Text>
+                                                </SafeAreaView>
+                                                <SafeAreaView style={{ flexDirection: 'row' }}>
+                                                    <Text style={styles.smallTextGrey}>Platforms: </Text>
+                                                    <Text style={styles.smallTextGreen}>
+                                                        {item.platforms.map((o, i) => (item.genres.length === i + 1 ? o : o + '\n'))} 
+                                                    </Text>
+                                                </SafeAreaView>
+                                                <SafeAreaView style={{ flex: 1, justifyContent: 'flex-end' }}>
+                                                    <Favorite
+                                                        heart={item.favorite ? 'heart' : 'heart-o'}
+                                                        isGame={true}
+                                                        contentId={item.id}
+                                                        size={14}
+                                                    />
+                                                </SafeAreaView>
+                                            </SafeAreaView>
                                         </SafeAreaView>
-                                        <SafeAreaView style={{ flexDirection: 'row' }}>
-                                            <Text style={styles.smallTextGrey}>Platforms: </Text>
-                                            <Text style={styles.smallTextGreen}>
-                                                {item.platforms.map((o, i) => (item.genres.length === i + 1 ? o : o + '\n'))} 
-                                            </Text>
-                                        </SafeAreaView>
-                                        <SafeAreaView style={{ flex: 1, justifyContent: 'flex-end' }}>
-                                            <Favorite
-                                                heart={item.favorite ? 'heart' : 'heart-o'}
-                                                isGame={true}
-                                                contentId={item.id}
-                                                size={14}
-                                            />
-                                        </SafeAreaView>
-                                    </SafeAreaView>
-                                </SafeAreaView>
-                            )}
-                        />
-                    </>
-                ) : (
-                    <>
-                        <Text style={[Style.fontG, global.fontColor]}>Nenhum item favoritado.</Text>
-                    </>
-                )}
-            </SafeAreaView>
+                                    )}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <Text style={[Style.fontG, global.fontColor]}>Nenhum item favoritado.</Text>
+                            </>
+                        )}
+                    </SafeAreaView>
+                </>
+            )}
         </>
     );
 }

@@ -4,8 +4,8 @@ import { withNavigation } from 'react-navigation';
 import Carousel from '../components/Carousel';
 
 function ExploreList({ navigation }) {
-    function navigateToList(route, items, favorite = '') {
-        navigation.navigate(route, { list: items }, favorite);
+    function navigateToList(route, items, favorite = false) {
+        navigation.navigate(route, { list: items, isFavorite: favorite });
     }
 
     function navigateToItem(route, item) {

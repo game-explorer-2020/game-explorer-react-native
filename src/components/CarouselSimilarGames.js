@@ -14,7 +14,7 @@ export default function CarouselSimilarGames( props ) {
     }, []);
 
     return (
-        <SafeAreaView style={{flex:1},{width:330}}>
+        <SafeAreaView style={{flex:1}}>
             <SafeAreaView style={styles.Row}>
                 <Text style={[Style.fontP, global.fontColor]}>Similar Games</Text>
             </SafeAreaView>

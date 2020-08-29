@@ -47,7 +47,7 @@ function GameDetails({ navigation }) {
     return (
         <>
             {loading ? (
-                <SafeAreaView style={[styles.centerLoading]}>
+                <SafeAreaView style={([styles.centerLoading], global.backgroundColor)}>
                     <ActivityIndicator size="large" color="#494949" />
                 </SafeAreaView>
             ) : (
@@ -72,15 +72,10 @@ function GameDetails({ navigation }) {
                             </SafeAreaView>
                         </SafeAreaView>
                         <SafeAreaView style={[styles.Row]}>
-                            <SafeAreaView style={{ flex: 1, alignContent: 'center', justifyContent: 'center', marginTop: 5 }}>
+                            <SafeAreaView style={{ flex: 1, alignContent: 'flex-start', justifyContent: 'flex-start', marginTop: 5 }}>
                                 <Text style={([Style.fontG], styles.smallTextGrey)}>{getDate({ date: game.releaseDate })}</Text>
                                 <Text style={([Style.fontG], styles.smallTextGrey)}>{game.involvedCompanies[0]} </Text>
-                                <Favorite
-                                    heart={game.favorite ? 'heart' : 'heart-o'}
-                                    isGame={true}
-                                    contentId={game.id}
-                                    size={16}
-                                />
+                                <Favorite style={{marginLeft:10}} heart={game.favorite ? 'heart' : 'heart-o'} isGame={true} contentId={game.id} size={18} />
                             </SafeAreaView>
                             {game.aggregatedRating ? (
                                 <SafeAreaView style={{ flex: 1, alignContent: 'center' }}>
