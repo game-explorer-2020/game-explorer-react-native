@@ -47,8 +47,8 @@ function GameDetails({ navigation }) {
     return (
         <>
             {loading ? (
-                <SafeAreaView style={([styles.centerLoading], global.backgroundColor)}>
-                    <ActivityIndicator size="large" color="#494949" />
+                <SafeAreaView style={[styles.centerLoading]}>
+                    <ActivityIndicator size="large" color="#17B978" />
                 </SafeAreaView>
             ) : (
                 <ScrollView style={([Style.container], global.backgroundColor)}>
@@ -75,7 +75,13 @@ function GameDetails({ navigation }) {
                             <SafeAreaView style={{ flex: 1, alignContent: 'flex-start', justifyContent: 'flex-start', marginTop: 5 }}>
                                 <Text style={([Style.fontG], styles.smallTextGrey)}>{getDate({ date: game.releaseDate })}</Text>
                                 <Text style={([Style.fontG], styles.smallTextGrey)}>{game.involvedCompanies[0]} </Text>
-                                <Favorite style={{marginLeft:10}} heart={game.favorite ? 'heart' : 'heart-o'} isGame={true} contentId={game.id} size={18} />
+                                <Favorite
+                                    style={{ marginLeft: 10 }}
+                                    heart={game.favorite ? 'heart' : 'heart-o'}
+                                    isGame={true}
+                                    contentId={game.id}
+                                    size={18}
+                                />
                             </SafeAreaView>
                             {game.aggregatedRating ? (
                                 <SafeAreaView style={{ flex: 1, alignContent: 'center' }}>
@@ -163,7 +169,8 @@ const styles = StyleSheet.create({
     centerLoading: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'black'
     }
 });
 export default withNavigation(GameDetails);

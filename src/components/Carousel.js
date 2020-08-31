@@ -34,7 +34,7 @@ function Carousel(props) {
         <>
             {loading ? (
                 <SafeAreaView style={[styles.centerLoading]}>
-                    <ActivityIndicator size="large" color="#494949" />
+                    <ActivityIndicator size="large" color="#17B978" />
                 </SafeAreaView>
             ) : (
                 <>

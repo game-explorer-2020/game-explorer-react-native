@@ -34,26 +34,34 @@ function NewsFeed({ navigation }) {
 
     return (
         <>
-            <FlatList
-                data={feeds}
-                keyExtractor={(item, index) => index.toString()}
-                vertical
-                showsHorizontalScrollIndicator={false}
-                onEndThreshold={0.1}
-                contentContainerStyle={{ flexGrow: 1 }}
-                renderItem={({ item }) => (
-                    <SafeAreaView style={Style.backgroundDark}>
-                        <TouchableHighlight onPress={() => handleNavigate(item)}>
-                            <Image source={{ uri: item.imageUrl }} style={styles.frame}></Image>
-                        </TouchableHighlight>
-                        <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
-                        <SafeAreaView style={styles.Row}>
-                            <Favorite heart={item.favorite ? 'heart' : 'heart-o'} isGame={false} contentId={item.id} size={14} />
-                            <Text style={[Style.fontP, styles.timeStamp]}>{getDate({ date: item.publishedAt })}</Text>
-                        </SafeAreaView>
-                    </SafeAreaView>
-                )}
-            />
+            {loading ? (
+                <SafeAreaView style={[styles.centerLoading]}>
+                    <ActivityIndicator size="large" color="#17B978" />
+                </SafeAreaView>
+            ) : (
+                <>
+                    <FlatList
+                        data={feeds}
+                        keyExtractor={(item, index) => index.toString()}
+                        vertical
+                        showsHorizontalScrollIndicator={false}
+                        onEndThreshold={0.1}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        renderItem={({ item }) => (
+                            <SafeAreaView style={Style.backgroundDark}>
+                                <TouchableHighlight onPress={() => handleNavigate(item)}>
+                                    <Image source={{ uri: item.imageUrl }} style={styles.frame}></Image>
+                                </TouchableHighlight>
+                                <Text style={[Style.fontP, global.fontColor, styles.newsText]}>{item.title}</Text>
+                                <SafeAreaView style={styles.Row}>
+                                    <Favorite heart={item.favorite ? 'heart' : 'heart-o'} isGame={false} contentId={item.id} size={14} />
+                                    <Text style={[Style.fontP, styles.timeStamp]}>{getDate({ date: item.publishedAt })}</Text>
+                                </SafeAreaView>
+                            </SafeAreaView>
+                        )}
+                    />
+                </>
+            )}
         </>
     );
 }
@@ -86,7 +94,8 @@ const styles = StyleSheet.create({
     centerLoading: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'black'
     }
 });
 

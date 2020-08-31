@@ -39,20 +39,11 @@ function NewsFeed({ navigation }) {
         loadFeeds();
     }
 
-    function renderFooter() {
-        if (!loading) return null;
-        return (
-            <SafeAreaView style={[styles.bottomLoading]}>
-                <ActivityIndicator size="large" />
-            </SafeAreaView>
-        );
-    }
-
     return (
         <>
-            {loading ? (
+            {(loading && currentPage == 0)? (
                 <SafeAreaView style={[styles.centerLoading]}>
-                    <ActivityIndicator size="large" color="#494949" />
+                    <ActivityIndicator size="large" color="#17B978" />
                 </SafeAreaView>
             ) : (
                 <>
@@ -65,7 +56,6 @@ function NewsFeed({ navigation }) {
                         onEndReached={handleLoadMore}
                         onEndThreshold={0.1}
                         contentContainerStyle={{ flexGrow: 1 }}
-                        ListFooterComponent={renderFooter}
                         renderItem={({ item }) => (
                             <>
                                 <TouchableHighlight onPress={() => handleNavigate(item)}>
@@ -78,7 +68,14 @@ function NewsFeed({ navigation }) {
                                 </SafeAreaView>
                             </>
                         )}
-                    />
+                    />                   
+                    {loading ? (
+                        <SafeAreaView style={[styles.bottomLoading]}>
+                            <ActivityIndicator size="large" color="#17B978" />
+                        </SafeAreaView>
+                    ) : (
+                        <></>
+                    )}
                 </>
             )}
         </>

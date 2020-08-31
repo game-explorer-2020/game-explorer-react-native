@@ -44,7 +44,7 @@ function GameList({ navigation }) {
         <>
             {loading ? (
                 <SafeAreaView style={([styles.centerLoading], global.backgroundColor)}>
-                    <ActivityIndicator size="large" color="#494949" />
+                    <ActivityIndicator size="large" color="#17B978" />
                 </SafeAreaView>
             ) : (
                 <>

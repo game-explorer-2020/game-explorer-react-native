@@ -1,3 +1,6 @@
 {
-  "name": "GameExplorer"
+  "name": "GameExplorer",
+  "ios": {
+    "bundleIdentifier": "GameExplorer"
+  }
 }
