@@ -15,9 +15,9 @@ function Carousel(props) {
     }, []);
 
     loadMyList = async () => {
-        if(loading) return null;
+        if (loading) return null;
         setLoading(true);
-            setInterval(async () => {
+        setInterval(async () => {
             const response = await api.get('games');
             const response2 = await api.get('games/favorites');
             const response3 = await api.get('feeds/favorites');
@@ -40,9 +40,9 @@ function Carousel(props) {
                 <>
                     <SafeAreaView style={{ flex: 1 }}>
                         <SafeAreaView style={styles.Row}>
-                            <Text style={[Style.fontP, global.fontColor]}>Popular Games</Text>
+                            <Text style={[styles.fontTitle, global.fontColor]}>Popular Games</Text>
                             <TouchableHighlight onPress={() => props.showList('GameList', popularGames)}>
-                                <Text style={[global.fontColor, { fontSize: 13 }]}>SEE ALL →</Text>
+                                <Text style={[global.fontColor, { fontSize: 14 }]}>SEE ALL →</Text>
                             </TouchableHighlight>
                         </SafeAreaView>
                         <FlatList
@@ -93,7 +93,7 @@ function Carousel(props) {
                         />
                     </SafeAreaView>
                 </>
-            )}      
+            )}
         </>
     );
 }
@@ -101,7 +101,7 @@ function Carousel(props) {
 const styles = StyleSheet.create({
     Row: {
         paddingTop: 12,
-        paddingBottom: 3,
+        paddingBottom: 7,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end'
@@ -116,6 +116,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    fontTitle: {
+        fontSize: 18,
+        fontFamily: 'Nunito-Regular.ttf',
+        textAlign: 'justify'
     }
 });
 

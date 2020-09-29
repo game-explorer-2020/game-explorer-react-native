@@ -85,7 +85,7 @@ function GameDetails({ navigation }) {
                             </SafeAreaView>
                             {game.aggregatedRating ? (
                                 <SafeAreaView style={{ flex: 1, alignContent: 'center' }}>
-                                    <Text style={[Style.fontP, global.fontColor, styles.scoreLarge]}>
+                                    <Text style={[Style.fontP, styles.scoreLarge]}>
                                         {Math.floor(game.aggregatedRating)}
                                     </Text>
                                     <Text style={styles.mediumTextGreen}>{getScore({ score: game.aggregatedRating })}</Text>
@@ -96,7 +96,7 @@ function GameDetails({ navigation }) {
                             ) : null}
                             {game.rating ? (
                                 <SafeAreaView style={{ flex: 1, alignContent: 'center' }}>
-                                    <Text style={[Style.fontP, global.fontColor, styles.scoreLarge]}>{Math.floor(game.rating)}</Text>
+                                    <Text style={[Style.fontP, styles.scoreLarge]}>{Math.floor(game.rating)}</Text>
                                     <Text style={styles.mediumTextGreen}>{getScore({ score: game.rating })}</Text>
                                     <Text style={[Style.fontP, styles.smallTextGrey]}>Based on {game.ratingCount} critic ratings</Text>
                                 </SafeAreaView>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     scoreLarge: {
-        color: global.mainColor,
+        color: 'white',
         fontSize: 28,
         textAlign: 'center'
     },

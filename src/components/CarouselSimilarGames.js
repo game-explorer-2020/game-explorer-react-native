@@ -16,7 +16,7 @@ export default function CarouselSimilarGames( props ) {
     return (
         <SafeAreaView style={{flex:1}}>
             <SafeAreaView style={styles.Row}>
-                <Text style={[Style.fontP, global.fontColor]}>Similar Games</Text>
+                <Text style={[styles.fontTitle, global.fontColor]}>Similar Games</Text>
             </SafeAreaView>
             <FlatList
             data={myList}
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     Row: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "flex-end"
+        alignItems: "flex-end",
+        paddingBottom: 7
     },
     frame: {
         height: 100,
@@ -43,6 +44,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginRight: 10,
         marginBottom: 10
+    },
+    fontTitle: {
+        fontSize: 18,
+        fontFamily: 'Nunito-Regular.ttf',
+        textAlign: 'justify'
     }
 })
 

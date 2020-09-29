@@ -1,14 +1,14 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     fontG: {
         fontSize: 22,
-        fontFamily: 'Nunito-Bold.ttf',
+        fontFamily: 'Nunito-Bold',
         textAlign: 'justify'
     },
     fontP: {
         fontSize: 16,
-        fontFamily: 'Nunito-Regular.ttf',
+        fontFamily: 'Nunito-Regular',
         textAlign: 'justify'
     },
     fontLight: {
@@ -18,7 +18,7 @@ export default StyleSheet.create({
         color: 'white'
     },
     backgroundDark: {
-        backgroundColor: 'black',
+        backgroundColor: '#070707',
         flexGrow: 1,
         padding: 2
     },
@@ -32,4 +32,4 @@ export default StyleSheet.create({
         margin: 0,
         backgroundColor: 'black'
     }
-})
+});
